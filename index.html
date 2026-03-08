@@ -169,229 +169,70 @@
     <div id="blog" class="page">
         <div class="container">
             <h1 class="section-title">Thoughts & Insights</h1>
+            <div class="blog-controls">
+                <div class="blog-search-wrap">
+                    <span class="blog-search-icon" aria-hidden="true">🔍</span>
+                    <input id="blogSearchInput" class="blog-search-input" type="text" placeholder="Search blog posts..." aria-label="Search blog posts">
+                </div>
+                <div class="blog-tags" id="blogTags">
+                    <button type="button" class="blog-tag active" data-tag="english">English</button>
+                    <button type="button" class="blog-tag active" data-tag="vietnamese">Vietnamese</button>
+                </div>
+            </div>
             <div class="blog-grid">
-                <div class="blog-card" onclick="navigateTo('blog-post-1')">
+                <div class="blog-card" data-language="english" onclick="navigateTo('blog-post-1')">
                     <div class="blog-image">💭</div>
                     <div class="blog-content">
                         <div class="blog-meta">Jan 15, 2026 · 5 min read</div>
+                        <div class="blog-language-tag">English</div>
                         <h3>The Art of Restraint in Modern Design</h3>
                         <p>In a world obsessed with more, the real power lies in knowing what to remove. Exploring how minimalism isn't about less — it's about clarity.</p>
                         <a href="#" class="read-more">Read More →</a>
                     </div>
                 </div>
 
-                <div class="blog-card" onclick="navigateTo('blog-post-2')">
+                <div class="blog-card" data-language="english" onclick="navigateTo('blog-post-2')">
                     <div class="blog-image">🎯</div>
                     <div class="blog-content">
                         <div class="blog-meta">Jan 8, 2026 · 7 min read</div>
+                        <div class="blog-language-tag">English</div>
                         <h3>Finding Your Brand's Authentic Voice</h3>
                         <p>Why trying to sound like everyone else is the fastest way to be forgotten. A framework for discovering what makes your brand uniquely you.</p>
                         <a href="#" class="read-more">Read More →</a>
                     </div>
                 </div>
 
-                <div class="blog-card" onclick="navigateTo('blog-post-3')">
+                <div class="blog-card" data-language="vietnamese" onclick="navigateTo('blog-post-3')">
                     <div class="blog-image">🌟</div>
                     <div class="blog-content">
                         <div class="blog-meta">Dec 28, 2025 · 6 min read</div>
+                        <div class="blog-language-tag">Vietnamese</div>
                         <h3>Creativity in the Age of AI</h3>
                         <p>Technology is changing how we create, but the human element remains irreplaceable. Thoughts on navigating the future of creative work.</p>
                         <a href="#" class="read-more">Read More →</a>
                     </div>
                 </div>
 
-                <div class="blog-card" onclick="navigateTo('blog-post-4')">
+                <div class="blog-card" data-language="vietnamese" onclick="navigateTo('blog-post-4')">
                     <div class="blog-image">📚</div>
                     <div class="blog-content">
                         <div class="blog-meta">Dec 18, 2025 · 4 min read</div>
+                        <div class="blog-language-tag">Vietnamese</div>
                         <h3>Lessons from 10 Years of Creative Direction</h3>
                         <p>Reflections on a decade of building brands, leading teams, and learning what truly matters in creative work.</p>
                         <a href="#" class="read-more">Read More →</a>
                     </div>
                 </div>
             </div>
+            <p id="blogNoResults" class="blog-no-results" hidden>No posts found for your current search or tag filter.</p>
         </div>
     </div>
 
-    <!-- Blog Post 1 -->
-    <div id="blog-post-1" class="page">
-        <div class="blog-post">
-            <a href="#" class="back-link" onclick="navigateTo('blog'); return false;">← Back to Blog</a>
-            <div class="blog-post-header">
-                <h1>The Art of Restraint in Modern Design</h1>
-                <div class="blog-post-meta">January 15, 2026 · 5 min read</div>
-            </div>
-            <div class="blog-post-content">
-                <p>
-                    In an era where brands compete for attention with ever-louder voices and more elaborate visuals, there's a counterintuitive truth that many overlook: sometimes, the most powerful creative choice is what you decide not to do.
-                </p>
-                <p>
-                    I've spent years working with brands that come to me wanting "more" — more colors, more effects, more elements. They see competitors doing flashy campaigns and feel pressure to match that energy. But more often than not, what they actually need is less.
-                </p>
-                <h2>The Paradox of Choice</h2>
-                <p>
-                    When we pile on visual elements, we're not enhancing the message — we're diluting it. Each additional color, typeface, or graphic element creates another decision point for the viewer. Too many choices lead to decision paralysis, and in brand communication, paralysis means invisibility.
-                </p>
-                <p>
-                    Think about the brands you remember most clearly. Chances are, they're the ones with the strongest restraint. Apple. Nike. Google. These aren't brands that shout — they're brands that speak clearly because they've eliminated the noise.
-                </p>
-                <h2>Restraint as Strategy</h2>
-                <p>
-                    Practicing restraint in design isn't about being minimal for the sake of being minimal. It's a strategic choice to let your core message breathe. It's about having the confidence to say one thing well instead of ten things poorly.
-                </p>
-                <p>
-                    This philosophy extends beyond visual design. It applies to messaging, to campaign strategy, to brand storytelling. What's the one thing you want people to remember? Everything else should support that singular idea or get out of the way.
-                </p>
-                <h2>The Courage to Subtract</h2>
-                <p>
-                    Here's what I've learned: addition is easy. Subtraction takes courage. It's easier to add another feature, another color, another tagline than to look at what you have and ask, "What can we remove?"
-                </p>
-                <p>
-                    But that's where the real creative work happens. In the space between what you could say and what you choose to say. In the discipline of selecting only what matters most.
-                </p>
-                <p>
-                    The next time you're working on a creative project, try this: instead of asking "What can we add?" start with "What can we take away?" You might be surprised by how much stronger your work becomes when you give it room to breathe.
-                </p>
-            </div>
-        </div>
-    </div>
-
-    <!-- Blog Post 2 -->
-    <div id="blog-post-2" class="page">
-        <div class="blog-post">
-            <a href="#" class="back-link" onclick="navigateTo('blog'); return false;">← Back to Blog</a>
-            <div class="blog-post-header">
-                <h1>Finding Your Brand's Authentic Voice</h1>
-                <div class="blog-post-meta">January 8, 2026 · 7 min read</div>
-            </div>
-            <div class="blog-post-content">
-                <p>
-                    One of the most common requests I hear from clients is some version of: "We want to sound like [successful brand X]." It's understandable. When you see a brand connecting with audiences in powerful ways, there's a natural instinct to emulate their approach.
-                </p>
-                <p>
-                    But here's the uncomfortable truth: trying to sound like someone else is the fastest way to be forgotten.
-                </p>
-                <h2>The Authenticity Problem</h2>
-                <p>
-                    Today's audiences have finely tuned BS detectors. They can sense when a brand is performing rather than being. And in a landscape saturated with content, the brands that cut through are the ones that sound genuinely like themselves — not like a calculated version of what they think people want to hear.
-                </p>
-                <p>
-                    Your brand's voice isn't something you invent. It's something you discover. It's already there, embedded in your company's DNA, your founding story, your team's personality, your unique perspective on your industry.
-                </p>
-                <h2>A Framework for Discovery</h2>
-                <p>
-                    So how do you find it? Start by asking different questions. Not "How should we sound?" but "How do we already sound when we're at our best?"
-                </p>
-                <p>
-                    Look at your internal communications. How does your team talk to each other? What language do you use when you're excited about a project? What stories do you tell at team meetings? There's often more authenticity in these unguarded moments than in any carefully crafted external message.
-                </p>
-                <p>
-                    Talk to your customers. Not through surveys or focus groups, but real conversations. What words do they use to describe you? What do they value about working with you that might not be in your marketing materials?
-                </p>
-                <h2>The Courage to Be Different</h2>
-                <p>
-                    Once you've uncovered your authentic voice, you need the courage to use it — even when it doesn't sound like your competitors. Especially when it doesn't sound like your competitors.
-                </p>
-                <p>
-                    This might mean being more casual when your industry is formal. Or more thoughtful when everyone else is trying to be funny. Or more opinionated when others are playing it safe.
-                </p>
-                <p>
-                    Your brand voice should feel like a natural extension of who you are. When it clicks, you'll know — because it will feel less like marketing and more like having a conversation with someone who gets you.
-                </p>
-            </div>
-        </div>
-    </div>
-
-    <!-- Blog Post 3 -->
-    <div id="blog-post-3" class="page">
-        <div class="blog-post">
-            <a href="#" class="back-link" onclick="navigateTo('blog'); return false;">← Back to Blog</a>
-            <div class="blog-post-header">
-                <h1>Creativity in the Age of AI</h1>
-                <div class="blog-post-meta">December 28, 2025 · 6 min read</div>
-            </div>
-            <div class="blog-post-content">
-                <p>
-                    The conversation around AI and creativity tends to fall into two camps: those who see it as an existential threat to creative work, and those who view it as just another tool in our arsenal. As with most polarized debates, the truth is more nuanced.
-                </p>
-                <p>
-                    I've been experimenting with AI tools in my creative process for the past year, and I've come to realize that the question isn't whether AI will replace human creativity — it's how we can use these tools to amplify what makes us uniquely human.
-                </p>
-                <h2>The Human Element</h2>
-                <p>
-                    What AI can do remarkably well is execute. It can generate variations, combine styles, optimize for patterns. What it can't do is understand the deeper why behind creative decisions. It doesn't know the client's unspoken concerns, the cultural context that makes one approach resonate over another, or the strategic nuances that inform creative direction.
-                </p>
-                <p>
-                    The most valuable creative work has always been about judgment, taste, and the ability to synthesize complex inputs into something that feels right. These are fundamentally human skills.
-                </p>
-                <h2>A New Creative Workflow</h2>
-                <p>
-                    I've started using AI as a thinking partner — a way to quickly explore possibilities and push past initial ideas. It helps me generate variations I might not have considered, challenge my assumptions, and move faster through the exploration phase.
-                </p>
-                <p>
-                    But the crucial decisions — what to pursue, what to refine, what to present — those still require human judgment. And increasingly, I believe that's where the real value lies.
-                </p>
-                <h2>The Path Forward</h2>
-                <p>
-                    Rather than fearing AI, we should be leaning into what makes human creativity irreplaceable: empathy, cultural awareness, strategic thinking, and the ability to create work that resonates on a deeper emotional level.
-                </p>
-                <p>
-                    The creative directors who will thrive in this new landscape aren't the ones who resist technology or embrace it uncritically. They're the ones who understand how to leverage AI's strengths while doubling down on uniquely human capabilities.
-                </p>
-            </div>
-        </div>
-    </div>
-
-    <!-- Blog Post 4 -->
-    <div id="blog-post-4" class="page">
-        <div class="blog-post">
-            <a href="#" class="back-link" onclick="navigateTo('blog'); return false;">← Back to Blog</a>
-            <div class="blog-post-header">
-                <h1>Lessons from 10 Years of Creative Direction</h1>
-                <div class="blog-post-meta">December 18, 2025 · 4 min read</div>
-            </div>
-            <div class="blog-post-content">
-                <p>
-                    A decade ago, I was convinced that great creative work was all about the idea. The breakthrough concept, the clever twist, the memorable visual. And while those things matter, ten years of leading creative teams has taught me that sustainable creative excellence is built on something else entirely.
-                </p>
-                <h2>Process Over Inspiration</h2>
-                <p>
-                    Early in my career, I waited for inspiration to strike. Now I know that inspiration is the reward for showing up consistently with a solid process. The best work comes from disciplined exploration, not lightning-bolt moments.
-                </p>
-                <p>
-                    We've built systems at Mighty Stone that create space for creativity while maintaining momentum. Regular check-ins, structured feedback loops, and clear decision frameworks. It sounds unglamorous, but it's what allows us to consistently deliver work we're proud of.
-                </p>
-                <h2>Listening Is a Creative Skill</h2>
-                <p>
-                    I used to think the creative director's job was to have all the answers. Now I know it's to ask the right questions and really listen to the responses.
-                </p>
-                <p>
-                    The best ideas often come from unexpected sources — a junior designer's offhand comment, a client's frustration about something unrelated, a conversation overheard in a coffee shop. But you only catch these if you're truly listening.
-                </p>
-                <h2>Constraints Fuel Creativity</h2>
-                <p>
-                    Give someone unlimited resources and total freedom, and they'll often freeze. Give them smart constraints — a tight budget, a specific challenge, a clear focus — and watch them thrive.
-                </p>
-                <p>
-                    Some of our best work at Mighty Stone has come from projects with the tightest constraints. Limitations force you to think differently, to find elegant solutions, to be more creative with less.
-                </p>
-                <h2>Relationships Matter More Than Portfolio</h2>
-                <p>
-                    Your portfolio opens doors. But what keeps you in the room — and brings clients back — is how you make people feel. Are you someone who listens? Who makes collaboration energizing rather than exhausting? Who delivers on promises?
-                </p>
-                <p>
-                    The clients who've stayed with us for years aren't here because we're the most awarded agency. They're here because we've built trust, shown up consistently, and made the creative process something they look forward to rather than dread.
-                </p>
-                <h2>Keep Learning</h2>
-                <p>
-                    The moment you think you've figured it out is the moment you start falling behind. The industry evolves, audiences change, new tools emerge. Stay curious. Stay humble. Keep learning.
-                </p>
-                <p>
-                    After ten years, I still feel like I'm just getting started. And that's exactly how it should be.
-                </p>
-            </div>
-        </div>
-    </div>
+    <!-- Blog Post Pages (loaded from /blog-posts for easier maintenance) -->
+    <div id="blog-post-1" class="page" data-post="blog-post-1"></div>
+    <div id="blog-post-2" class="page" data-post="blog-post-2"></div>
+    <div id="blog-post-3" class="page" data-post="blog-post-3"></div>
+    <div id="blog-post-4" class="page" data-post="blog-post-4"></div>
 
     <!-- Contact Page -->
     <div id="contact" class="page">
