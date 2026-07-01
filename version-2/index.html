@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Viet Le Duy - Creative Director</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <a href="#" class="logo" onclick="navigateTo('home'); return false;">VIET LE DUY</a>
+            <button class="menu-button" id="menuButton">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Full Screen Menu -->
+    <div class="fullscreen-menu" id="fullscreenMenu">
+        <button class="close-menu" id="closeMenu">&times;</button>
+        <ul>
+            <li><a href="#" data-page="home" class="nav-link">Home</a></li>
+            <li><a href="#" data-page="mighty-stone" class="nav-link">Mighty Stone</a></li>
+            <li><a href="#" data-page="blog" class="nav-link">Blog</a></li>
+            <li><a href="#" data-page="contact" class="nav-link">Contact</a></li>
+        </ul>
+    </div>
+
+    <!-- Home Page -->
+    <div id="home" class="page active">
+        <div class="hero">
+            <div class="hero-image">
+                <img src="img/VietAva02.png" alt="Viet Le Duy">
+            </div>
+            <div class="hero-content">
+                <h1>
+                    Hi, I'm <strong>Viet Le Duy</strong> — a Creative Director and founder of Mighty Stone.
+                </h1>
+                <p>
+                    I work with brands and teams to craft meaningful visuals that blend creativity, design, and storytelling. I believe every brand has its own character and untapped possibilities. My goal is to uncover that essence and transform it into work that stands out — and creates real value.
+                </p>
+            </div>
+        </div>
+
+        <div class="quote-section">
+            <blockquote>
+                "Creativity is not about adding more — it's about uncovering what's already there, waiting to be seen."
+            </blockquote>
+        </div>
+
+        <div class="story-section">
+            <div class="story-container">
+                <h2>The Journey</h2>
+                <div class="story-content">
+                    <p>
+                        I’ve been drawn to creating things from a very young age — not just for the joy of making, but for the idea that what you create can serve a real purpose. Early on, I became fascinated by how visuals, systems, and ideas could come together to solve problems and communicate meaning.
+                    </p>
+                    <p>
+                        Over time, that curiosity grew into a clear direction: using creativity as a tool for businesses. Not decoration, not trends — but thoughtful visual solutions that help brands explain what they do, connect with people, and move forward with confidence.
+                    </p>
+                    <p>
+                        That belief eventually became Mighty Stone — a creative studio built to deliver meaningful services, not just outputs. We create products, visuals, and stories that are designed to work: to clarify messages, strengthen brands, and support real business goals.
+                    </p>
+                    <p>
+                        Alongside serving clients, I’m also building something just as important to me — a creative environment where people can grow, think deeply, and do work they’re proud of. A place where creativity is respected, problems are worth solving, and good work is the standard.
+                    </p>
+                    <p>
+                        This journey is ongoing.
+                        And everything I build today is shaped by that same idea: creation should always matter.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="mighty-stone-home-section">
+            <div class="mighty-stone-home-container">
+                <div class ="msimg1">
+                        <img src="img/mslogo02.png" alt="Ice logo on ice podium">
+                </div>
+                <div class="mighty-stone-home-content">
+                    <h2>Mighty Stone</h2>
+                    <p>
+                        Mighty Stone isn't just a studio — it's a philosophy. Founded on the belief that every brand has an untold story worth discovering, we work with companies who aren't afraid to stand out and make a real impact.
+                    </p>
+                    <p>
+                        We're a team of creative thinkers, strategic minds, and visual storytellers who believe that great work comes from deep collaboration. We don't just execute briefs — we partner with our clients to uncover what makes them unique and translate that into work that resonates.
+                    </p>
+                    <p>
+                        From startups finding their voice to established brands reinventing themselves, we bring clarity, creativity, and strategic thinking to every project. Our approach is simple: listen deeply, think boldly, create purposefully.
+                    </p>
+                    <div class="cta-buttons">
+                        <a href="#" class="cta-button" onclick="navigateTo('mighty-stone'); return false;">Explore What We Do</a>
+                        <a href="https://www.mightystone.vn/" class="cta-button cta-button-outline" target="_blank">Visit Mighty Stone</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="stats">
+                <div class="stat-item">
+                    <div class="stat-number">10+</div>
+                    <div class="stat-label">Years Experience</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">100+</div>
+                    <div class="stat-label">Projects Delivered</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">50+</div>
+                    <div class="stat-label">Happy Clients</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mighty Stone Page -->
+    <div id="mighty-stone" class="page">
+        <div class="mighty-stone-hero">
+            <h1>Mighty Stone</h1>
+            <p>
+                A creative studio where brands discover their essence and transform it into meaningful work that resonates, endures, and creates real value.
+            </p>
+        </div>
+
+        <div class="container">
+            <h2 class="section-title">What We Do</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">🎨</div>
+                    <h3>Brand Identity</h3>
+                    <p>We craft visual identities that capture the soul of your brand — distinctive, memorable, and built to last.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">✨</div>
+                    <h3>Creative Direction</h3>
+                    <p>Strategic vision meets artistic execution. We guide your creative journey from concept to completion.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">📖</div>
+                    <h3>Storytelling</h3>
+                    <p>Every brand has a story. We help you find it, shape it, and share it in ways that truly connect.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">🎯</div>
+                    <h3>Campaign Strategy</h3>
+                    <p>Data-informed creativity that drives results. Campaigns that don't just look good — they work.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">💼</div>
+                    <h3>Consulting</h3>
+                    <p>Expert guidance for teams navigating creative challenges and looking to elevate their brand presence.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">🚀</div>
+                    <h3>Creative Workshops</h3>
+                    <p>Hands-on sessions that empower your team to think differently and unlock creative potential.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Blog Page -->
+    <div id="blog" class="page">
+        <div class="container">
+            <h1 class="section-title">Thoughts & Insights</h1>
+            <div class="blog-controls">
+                <div class="blog-search-wrap">
+                    <span class="blog-search-icon" aria-hidden="true">🔍</span>
+                    <input id="blogSearchInput" class="blog-search-input" type="text" placeholder="Search blog posts..." aria-label="Search blog posts">
+                </div>
+                <div class="blog-tags" id="blogTags">
+                    <button type="button" class="blog-tag active" data-tag="english">English</button>
+                    <button type="button" class="blog-tag active" data-tag="vietnamese">Vietnamese</button>
+                </div>
+            </div>
+            <div class="blog-grid">
+                <div class="blog-card" data-language="english" onclick="navigateTo('blog-post-1')">
+                    <div class="blog-image">💭</div>
+                    <div class="blog-content">
+                        <div class="blog-meta">Jan 15, 2026 · 5 min read</div>
+                        <div class="blog-language-tag">English</div>
+                        <h3>The Art of Restraint in Modern Design</h3>
+                        <p>In a world obsessed with more, the real power lies in knowing what to remove. Exploring how minimalism isn't about less — it's about clarity.</p>
+                        <a href="#" class="read-more">Read More →</a>
+                    </div>
+                </div>
+
+                <div class="blog-card" data-language="english" onclick="navigateTo('blog-post-2')">
+                    <div class="blog-image">🎯</div>
+                    <div class="blog-content">
+                        <div class="blog-meta">Jan 8, 2026 · 7 min read</div>
+                        <div class="blog-language-tag">English</div>
+                        <h3>Finding Your Brand's Authentic Voice</h3>
+                        <p>Why trying to sound like everyone else is the fastest way to be forgotten. A framework for discovering what makes your brand uniquely you.</p>
+                        <a href="#" class="read-more">Read More →</a>
+                    </div>
+                </div>
+
+                <div class="blog-card" data-language="vietnamese" onclick="navigateTo('blog-post-3')">
+                    <div class="blog-image">🌟</div>
+                    <div class="blog-content">
+                        <div class="blog-meta">Dec 28, 2025 · 6 min read</div>
+                        <div class="blog-language-tag">Vietnamese</div>
+                        <h3>Creativity in the Age of AI</h3>
+                        <p>Technology is changing how we create, but the human element remains irreplaceable. Thoughts on navigating the future of creative work.</p>
+                        <a href="#" class="read-more">Read More →</a>
+                    </div>
+                </div>
+
+                <div class="blog-card" data-language="vietnamese" onclick="navigateTo('blog-post-4')">
+                    <div class="blog-image">📚</div>
+                    <div class="blog-content">
+                        <div class="blog-meta">Dec 18, 2025 · 4 min read</div>
+                        <div class="blog-language-tag">Vietnamese</div>
+                        <h3>Lessons from 10 Years of Creative Direction</h3>
+                        <p>Reflections on a decade of building brands, leading teams, and learning what truly matters in creative work.</p>
+                        <a href="#" class="read-more">Read More →</a>
+                    </div>
+                </div>
+            </div>
+            <p id="blogNoResults" class="blog-no-results" hidden>No posts found for your current search or tag filter.</p>
+        </div>
+    </div>
+
+    <!-- Blog Post Pages (loaded from /blog-posts for easier maintenance) -->
+    <div id="blog-post-1" class="page" data-post="blog-post-1"></div>
+    <div id="blog-post-2" class="page" data-post="blog-post-2"></div>
+    <div id="blog-post-3" class="page" data-post="blog-post-3"></div>
+    <div id="blog-post-4" class="page" data-post="blog-post-4"></div>
+
+    <!-- Contact Page -->
+    <div id="contact" class="page">
+        <div class="container">
+            <div class="contact-content">
+                <h1>Let's Work Together</h1>
+                <p>Have a project in mind or want to discuss how we can help your brand stand out? I'd love to hear from you.</p>
+                
+                <div class="contact-methods">
+                    <div class="contact-item">
+                        <h3>Email</h3>
+                        <a href="mailto:viet@mightystone.studio">vietle@mightystone.vn</a>
+                    </div>
+                    <div class="contact-item">
+                        <h3>Phone Number</h3>
+                        <a href="tel:+84901234567">+84 899 312 653</a>
+                    </div>
+                    <div class="contact-item">
+                        <h3>Location</h3>
+                        <a href="#">Ho Chi Minh City, Vietnam</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 Viet Le Duy. All rights reserved.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

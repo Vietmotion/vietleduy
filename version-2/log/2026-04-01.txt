@@ -1,0 +1,33 @@
+Date: 2026-04-01
+Project: Viet Le Duy personal website - investigation board landing page
+
+What we built today:
+- Created a new standalone landing page (without editing main index): landing-board.html, landing-board.css, landing-board.js.
+- Designed a cinematic investigation-board experience with pinned photos, notes, article clippings, strings, and moody room background.
+- Moved header into the board top area and updated copy:
+  - Case file: Viet Le Duy
+  - Creative Director at Mighty Stone
+  - The one you find for your next creative project.
+- Converted detail section from side panel into popup modal.
+- Implemented multi-paragraph detail content rendering for clickable clues.
+- Added long-form intro narrative for portrait clue.
+- Made board responsive and centered, with viewport-aware sizing.
+- Improved clue styling with slight natural rotations and pin-based pivot behavior.
+- Enabled drag-and-drop interaction for board clues (mouse/touch/pen).
+
+Bugs fixed today:
+- Popup content spacing and alignment issues (headline/body gap, left-right inner space).
+- Text overflow behavior inside detail popup.
+- Repeated click/drag inflation bug where portrait image kept growing.
+
+Current structure:
+- landing-board.html
+- landing-board.css
+- landing-board.js
+- log/2026-04-01.txt
+
+Next suggested tasks:
+- Persist clue positions using localStorage.
+- Add "Reset board layout" button.
+- Replace placeholder clue text with real project/case content.
+- Optional: add subtle string tracing animation on first load.

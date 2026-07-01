@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Viet Le Duy | Case Board</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Special+Elite&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="landing-board.css" />
+</head>
+<body>
+  <main class="case-room">
+    <section class="board-frame" aria-label="Creative investigation board">
+      <div class="board-glow" aria-hidden="true"></div>
+      <div class="board" id="caseBoard">
+        <header class="board-header">
+          <p class="hero-kicker">Case file: Viet Le Duy</p>
+          <h1>Creative Director at Mighty Stone</h1>
+          <p class="hero-subtitle">The one you find for your next creative project.</p>
+        </header>
+
+        <div class="string string-1" aria-hidden="true"></div>
+        <div class="string string-2" aria-hidden="true"></div>
+        <div class="string string-3" aria-hidden="true"></div>
+        <div class="string string-4" aria-hidden="true"></div>
+        <div class="string string-5" aria-hidden="true"></div>
+
+        <button class="clue photo c1" type="button"
+          data-title="Viet Le Duy"
+          data-type="Creative Director"
+          data-year="2026"
+          data-detail="The subject's connection to creativity began early. Before there was any language for design or motion, there was already a habit of making, dismantling, rebuilding, and chasing the satisfaction of bringing something new into the world. Early access to a computer only sharpened the pattern.||At around fifteen, the case took a decisive turn. A simple After Effects tutorial introduced a transformation effect, but the impact went far beyond technique. It revealed that ideas could move, evolve, and live on screen. That moment appears to have converted curiosity into direction.||What followed was not just skill-building, but a growing sense of purpose. The work became less about creating for its own sake, and more about making things that could truly help people: visuals that clarify, stories that connect, and creative work that solves real communication problems.||That thinking eventually led to the formation of Mighty Stone. The studio continues to grow, but the original principle still holds: not to make work that is merely attractive, but work that is thoughtful, effective, and built to do something meaningful.||A second thread also runs through the file. Beyond the work itself is the ambition to build a place where creativity is respected, where people can grow, experiment, and do the best work of their lives. Not a factory. A real studio. The kind many dream about before the industry teaches them to lower the bar.||The case remains open. The subject is still building.">
+          <img src="img/VietAva01.png" alt="Portrait" />
+          <span class="pin" aria-hidden="true"></span>
+        </button>
+
+        <button class="clue note c2" type="button"
+          data-title="Campaign Note"
+          data-type="Strategy"
+          data-year="2025"
+          data-detail="A single insight can become the central narrative. This note tracks audience tension, desire, and message hierarchy.">
+          <h3>Target Tension</h3>
+          <p>From noise to signal. Every visual choice must sharpen the point.</p>
+          <span class="pin" aria-hidden="true"></span>
+        </button>
+
+        <button class="clue article c3" type="button"
+          data-title="Press Clipping"
+          data-type="Editorial"
+          data-year="2024"
+          data-detail="Editorial placements are treated as design surfaces. Typography, crop, and sequencing are planned for storytelling momentum.">
+          <p class="article-head">CITY ARTS WEEKLY</p>
+          <p class="article-title">Creative Studio Reframes Local Brand Narratives</p>
+          <p class="article-copy">How visual systems become culture signals across digital and physical touchpoints.</p>
+          <span class="pin" aria-hidden="true"></span>
+        </button>
+
+        <button class="clue stamp c5" type="button"
+          data-title="Production Stamp"
+          data-type="Execution"
+          data-year="2026"
+          data-detail="Execution is where ideas either collapse or sharpen. This stage aligns craft quality with strategic clarity.">
+          <p>APPROVED</p>
+          <small>MS / Production Desk</small>
+          <span class="pin" aria-hidden="true"></span>
+        </button>
+
+        <button class="clue note c6" type="button"
+          data-title="Client Debrief"
+          data-type="Partnership"
+          data-year="2025"
+          data-detail="Debriefs identify what moved metrics and what moved people. The next iteration starts with both data and instinct.">
+          <h3>Debrief</h3>
+          <p>Measure what landed. Keep what made people feel something.</p>
+          <span class="pin" aria-hidden="true"></span>
+        </button>
+
+        <button class="clue photo c7" type="button"
+          data-title="Studio Mark"
+          data-type="Brand Asset"
+          data-year="2026"
+          data-detail="The mark appears inside the board as evidence, not decoration. Brand assets should behave like clues in a larger narrative.">
+          <img src="img/mslogo02.png" alt="Mighty Stone logo" />
+          <span class="pin" aria-hidden="true"></span>
+        </button>
+
+        <button class="clue article c8" type="button"
+          data-title="Impact Snapshot"
+          data-type="Results"
+          data-year="2024"
+          data-detail="Campaign impact is framed as a story arc: awareness spike, engagement depth, and conversion momentum over time.">
+          <p class="article-head">CASE FILE 08</p>
+          <p class="article-title">Engagement Up 2.4x in 6 Weeks</p>
+          <p class="article-copy">Creative repositioning converted passive viewers into active community members.</p>
+          <span class="pin" aria-hidden="true"></span>
+        </button>
+      </div>
+    </section>
+
+    <div class="detail-overlay" id="detailOverlay" hidden>
+      <aside class="detail-box" id="detailBox" role="dialog" aria-modal="true" aria-labelledby="detailTitle" aria-live="polite">
+      <button class="detail-close" id="detailClose" aria-label="Close details">x</button>
+      <p class="detail-label">Case Detail</p>
+      <h2 id="detailTitle">Select any item on the board.</h2>
+      <p class="detail-meta"><span id="detailType">Creative Direction</span> | <span id="detailYear">2026</span></p>
+      <div id="detailText" class="detail-body">
+        <p>Click a photo, clipping, or note to reveal the story behind the clue.</p>
+      </div>
+      </aside>
+    </div>
+  </main>
+
+  <script src="landing-board.js"></script>
+</body>
+</html>

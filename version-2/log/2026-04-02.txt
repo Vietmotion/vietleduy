@@ -1,0 +1,28 @@
+Date: 2026-04-02
+Project: Viet Le Duy personal website - investigation board landing page
+
+What we did today:
+- Renamed browser tab title in landing-board.html from "Mighty Stone | Case Board" to "Viet Le Duy | Case Board".
+
+Bugs fixed today:
+- None.
+
+Current structure:
+- index.html
+- landing-board.html
+- landing-board.css
+- landing-board.js
+- styles.css
+- script.js
+- blog-posts/blog-post-1.html
+- blog-posts/blog-post-2.html
+- blog-posts/blog-post-3.html
+- blog-posts/blog-post-4.html
+- log/2026-04-01.txt
+- log/2026-04-02.txt
+
+Next suggested tasks:
+- Persist clue positions using localStorage.
+- Add "Reset board layout" button.
+- Replace placeholder clue text with real project/case content.
+- Optional: add subtle string tracing animation on first load.
