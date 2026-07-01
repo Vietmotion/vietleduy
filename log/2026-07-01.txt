@@ -1,0 +1,30 @@
+Date: 2026-07-01
+Project: Viet Le Duy personal website
+
+What we did today:
+- Refined the Move Up button scroll behavior in script.js so the return motion starts slower.
+- Replaced the previous ease-out-only curve with an ease-in-out cubic curve for a gentler launch.
+- Increased animation duration for a smoother overall glide back to chapter select.
+
+Bugs fixed today:
+- Reduced the perception of a quick jump at the beginning of the Move Up scroll motion.
+
+Current structure:
+- index.html
+- landing-board.html
+- landing-board.css
+- landing-board.js
+- styles.css
+- script.js
+- blog-posts/blog-post-1.html
+- blog-posts/blog-post-2.html
+- blog-posts/blog-post-3.html
+- blog-posts/blog-post-4.html
+- log/2026-04-01.txt
+- log/2026-04-02.txt
+- log/2026-07-01.txt
+
+Next suggested tasks:
+- Fine-tune the first 15 percent of scroll acceleration after a live feel check.
+- Add optional reduced-motion fallback for users who prefer less animation.
+- Review chapter panel and Move Up interactions on small-screen devices.

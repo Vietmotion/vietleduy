@@ -6,6 +6,7 @@
 
 body {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    --chapter-content-width: 46rem;
     line-height: 1.7;
     color: #1a1a1a;
     background: #fafafa;
@@ -14,7 +15,6 @@ body {
 /* Navigation */
 nav {
     background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(10px);
     padding: 1.5rem 0;
     position: sticky;
     top: 0;
@@ -1228,6 +1228,9 @@ body[data-theme="dark"] .theme-toggle::after {
     letter-spacing: 0.25em;
     color: var(--accent);
     font-weight: 700;
+    max-width: var(--chapter-content-width);
+    width: 100%;
+    margin: 0 auto;
 }
 
 .chapter-strip-section {
@@ -1290,7 +1293,7 @@ body[data-theme="dark"] .theme-toggle::after {
 .chapter-strip__image {
     background-size: cover;
     background-position: center;
-    filter: grayscale(1) saturate(0.65) brightness(0.86);
+    filter: grayscale(1) saturate(0.78) brightness(0.8) contrast(1.04);
     transform: scale(1.02);
     transition: filter 0.35s ease, transform 0.35s ease;
 }
@@ -1298,12 +1301,22 @@ body[data-theme="dark"] .theme-toggle::after {
 .chapter-strip:hover .chapter-strip__image,
 .chapter-strip.active .chapter-strip__image,
 .chapter-strip:focus-visible .chapter-strip__image {
-    filter: grayscale(0) saturate(1.08) brightness(1);
+    filter: grayscale(0) saturate(1.16) brightness(0.98) contrast(1.07);
     transform: scale(1.08);
 }
 
 .chapter-strip__overlay {
-    background: linear-gradient(180deg, rgba(6, 10, 16, 0.06), rgba(6, 10, 16, 0.7));
+    background:
+        linear-gradient(150deg, rgba(34, 64, 122, 0.34) 0%, rgba(19, 30, 50, 0.22) 42%, rgba(212, 118, 50, 0.24) 78%, rgba(255, 208, 102, 0.18) 100%),
+        linear-gradient(180deg, rgba(6, 10, 16, 0.12), rgba(6, 10, 16, 0.74));
+}
+
+.chapter-strip:hover .chapter-strip__overlay,
+.chapter-strip.active .chapter-strip__overlay,
+.chapter-strip:focus-visible .chapter-strip__overlay {
+    background:
+        linear-gradient(150deg, rgba(42, 82, 152, 0.28) 0%, rgba(24, 38, 64, 0.18) 42%, rgba(228, 136, 62, 0.2) 78%, rgba(255, 214, 116, 0.14) 100%),
+        linear-gradient(180deg, rgba(6, 10, 16, 0.08), rgba(6, 10, 16, 0.66));
 }
 
 .chapter-strip__meta {
@@ -1411,15 +1424,16 @@ body[data-theme="dark"] .theme-toggle::after {
 }
 
 .chapter-story-panel {
-    max-width: 1120px;
+    max-width: 1320px;
     margin: 0 auto;
-    padding: 2.5rem;
+    padding: 3rem clamp(2rem, 6vw, 6rem);
     border-radius: 0.55rem;
+    --chapter-content-width: 46rem;
 }
 
 .chapter-strip-section + .chapter-story-panel {
     margin-top: 2rem;
-    padding: 2.5rem;
+    padding: 3rem clamp(2rem, 6vw, 6rem);
     border: 0;
     border-radius: 0.55rem;
     background: transparent;
@@ -1431,21 +1445,32 @@ body[data-theme="dark"] .theme-toggle::after {
     font-size: clamp(2rem, 4vw, 4rem);
     line-height: 0.98;
     letter-spacing: -0.05em;
-    margin: 0.6rem 0 1rem;
+    margin: 0.6rem auto 1rem;
+    max-width: var(--chapter-content-width);
+    width: 100%;
 }
 
 .chapter-story-lead {
     font-size: 1.15rem;
     line-height: 1.85;
-    max-width: 62ch;
+    max-width: var(--chapter-content-width);
     color: var(--page-text);
-    margin-bottom: 1.25rem;
+    width: 100%;
+    margin: 0 auto 1.25rem;
 }
 
-.chapter-story-panel p:last-of-type {
+.chapter-story-body {
+    display: grid;
+    gap: 1.1rem;
     color: var(--muted-text);
     line-height: 1.9;
-    max-width: 72ch;
+    max-width: var(--chapter-content-width);
+    width: 100%;
+    margin: 0 auto;
+}
+
+.chapter-story-body p {
+    margin: 0;
 }
 
 .chapter-story-actions {
@@ -1453,6 +1478,10 @@ body[data-theme="dark"] .theme-toggle::after {
     flex-wrap: wrap;
     gap: 0.85rem;
     margin-top: 1.8rem;
+    max-width: var(--chapter-content-width);
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .move-up-button {

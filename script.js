@@ -24,8 +24,22 @@ const chapterData = {
     1: {
         title: 'Childhood',
         kicker: 'Chapter 01',
-        lead: 'The earliest chapter begins in Hanoi, where ordinary streets became the first place I learned to notice texture, light, and movement.',
-        body: 'Warm memories from a late-90s childhood sit at the center of this chapter. The city felt alive in a quiet way, and that atmosphere shaped how I later saw images, spaces, and stories. It was the beginning of learning that everyday life could be turned into something meaningful.',
+        lead: 'I was born in Da Lat, the cold and beautiful mountain city that I still think of as one of the best places in Vietnam.',
+        bodyParagraphs: [
+            'Back then, life moved slowly. The city was quiet, the mornings were cold, and sometimes I could see my own breath in the air on the way to school. There was no big dream in my head yet. No clear direction. Just a little kid growing up among the hills, going to school in the morning, walking home in the afternoon, living a life that did not seem very different from anyone else\'s.',
+            'But maybe some things were already being planted quietly.',
+            'When I was around four or five, my uncle was living at my grandfather\'s house while studying in Da Lat. He had a computer. I did not know it at the time, but having the chance to touch a computer that early was something rare. It opened a small door. Maybe that was one of the reasons I later became a little faster with computers, technology, and all the strange creative things that could happen on a screen.',
+            'There was also art in the family, even if nobody called it that so loudly.',
+            'My father was a photographer. He would go out to take pictures for tourists visiting Da Lat, sometimes going to hotels and calling clients down for their photos. Back then, not everyone had a camera. A photograph still felt like something special, something worth dressing up for, something worth keeping.',
+            'My grandfather had his own kind of art too. He did pyrography, drawing with fire on wood. I still remember some of his works being really beautiful. Sadly, we did not keep them. They now exist only in memory, like smoke from something once burning.',
+            'Later, my family opened a computer game shop. A few years after that, when the internet arrived, it became an internet game shop. The business was not very successful and eventually stopped when I was in second grade. But during that time, something important had already happened.',
+            'I played games. I used Yahoo. I touched the early internet when it still felt like a secret universe. I started to feel the joy of making, discovering, and playing with cool things.',
+            'It was not yet anything with a name.',
+            'It was not yet something I could explain.',
+            'It was not yet a career.',
+            'It was just a cold city, a small kid, a family full of quiet art, and a computer screen glowing somewhere in the early years.',
+            'That was where the first chapter began.',
+        ],
     },
     2: {
         title: 'The Young Eager Boiz',
@@ -90,6 +104,7 @@ const chapterData = {
 
 let activeChapterId = '1';
 let chapterScrollAnimationFrame = null;
+let moveUpScrollAnimationFrame = null;
 
 // Open menu
 menuButton.addEventListener('click', () => {
@@ -243,6 +258,26 @@ function syncChapterButtons(chapterId) {
     });
 }
 
+function renderChapterBody(chapter) {
+    if (!chapterStoryBody) {
+        return;
+    }
+
+    const paragraphList = Array.isArray(chapter.bodyParagraphs) && chapter.bodyParagraphs.length
+        ? chapter.bodyParagraphs
+        : [chapter.body];
+
+    const paragraphElements = paragraphList
+        .filter(Boolean)
+        .map(paragraph => {
+            const paragraphNode = document.createElement('p');
+            paragraphNode.textContent = paragraph;
+            return paragraphNode;
+        });
+
+    chapterStoryBody.replaceChildren(...paragraphElements);
+}
+
 function renderChapter(chapterId, options = {}) {
     const chapter = getChapter(chapterId);
     const isLocked = Boolean(chapter.locked || options.locked);
@@ -259,9 +294,7 @@ function renderChapter(chapterId, options = {}) {
         chapterStoryLead.textContent = chapter.lead;
     }
 
-    if (chapterStoryBody) {
-        chapterStoryBody.textContent = chapter.body;
-    }
+    renderChapterBody(chapter);
 
     if (chapterStoryLock) {
         chapterStoryLock.hidden = !isLocked;
@@ -330,17 +363,49 @@ function startAcceleratedStoryPanelScroll() {
 }
 
 function scrollToChapterSelect() {
-    if (!chapterSelectSection) {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+    const targetY = chapterSelectSection
+        ? Math.max(0, chapterSelectSection.getBoundingClientRect().top + window.scrollY - 18)
+        : 0;
+
+    if (moveUpScrollAnimationFrame) {
+        cancelAnimationFrame(moveUpScrollAnimationFrame);
+        moveUpScrollAnimationFrame = null;
+    }
+
+    const startY = window.scrollY;
+    const distance = targetY - startY;
+
+    if (Math.abs(distance) < 2) {
+        window.scrollTo({ top: targetY, behavior: 'auto' });
         return;
     }
 
-    const targetY = chapterSelectSection.getBoundingClientRect().top + window.scrollY - 18;
+    const duration = 1120;
+    const startTime = performance.now();
+    const easeInOutCubic = t => (
+        t < 0.5
+            ? 4 * t * t * t
+            : 1 - Math.pow(-2 * t + 2, 3) / 2
+    );
 
-    window.scrollTo({
-        top: Math.max(0, targetY),
-        behavior: 'smooth',
-    });
+    const step = now => {
+        const elapsed = now - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        const eased = easeInOutCubic(progress);
+
+        window.scrollTo({
+            top: startY + distance * eased,
+            behavior: 'auto',
+        });
+
+        if (progress < 1) {
+            moveUpScrollAnimationFrame = requestAnimationFrame(step);
+        } else {
+            moveUpScrollAnimationFrame = null;
+        }
+    };
+
+    moveUpScrollAnimationFrame = requestAnimationFrame(step);
 }
 
 function updateMoveUpButtonVisibility() {
