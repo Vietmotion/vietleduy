@@ -25,27 +25,231 @@ const chapterData = {
         title: 'Childhood',
         kicker: 'Chapter 01',
         lead: 'I was born in Da Lat, the cold and beautiful mountain city that I still think of as one of the best places in Vietnam.',
-        bodyParagraphs: [
-            'Back then, life moved slowly. The city was quiet, the mornings were cold, and sometimes I could see my own breath in the air on the way to school. There was no big dream in my head yet. No clear direction. Just a little kid growing up among the hills, going to school in the morning, walking home in the afternoon, living a life that did not seem very different from anyone else\'s.',
-            'But maybe some things were already being planted quietly.',
-            'When I was around four or five, my uncle was living at my grandfather\'s house while studying in Da Lat. He had a computer. I did not know it at the time, but having the chance to touch a computer that early was something rare. It opened a small door. Maybe that was one of the reasons I later became a little faster with computers, technology, and all the strange creative things that could happen on a screen.',
-            'There was also art in the family, even if nobody called it that so loudly.',
-            'My father was a photographer. He would go out to take pictures for tourists visiting Da Lat, sometimes going to hotels and calling clients down for their photos. Back then, not everyone had a camera. A photograph still felt like something special, something worth dressing up for, something worth keeping.',
-            'My grandfather had his own kind of art too. He did pyrography, drawing with fire on wood. I still remember some of his works being really beautiful. Sadly, we did not keep them. They now exist only in memory, like smoke from something once burning.',
-            'Later, my family opened a computer game shop. A few years after that, when the internet arrived, it became an internet game shop. The business was not very successful and eventually stopped when I was in second grade. But during that time, something important had already happened.',
-            'I played games. I used Yahoo. I touched the early internet when it still felt like a secret universe. I started to feel the joy of making, discovering, and playing with cool things.',
-            'It was not yet anything with a name.',
-            'It was not yet something I could explain.',
-            'It was not yet a career.',
-            'It was just a cold city, a small kid, a family full of quiet art, and a computer screen glowing somewhere in the early years.',
-            'That was where the first chapter began.',
+        bodyBlocks: [
+            {
+                type: 'paragraph',
+                text: 'Back then, life moved slowly. The city was quiet, the mornings were cold, and sometimes I could see my own breath in the air on the way to school. There was no big dream in my head yet. No clear direction. Just a little kid growing up among the hills, going to school in the morning, walking home in the afternoon, living a life that did not seem very different from anyone else\'s.',
+            },
+            {
+                type: 'image',
+                src: 'img/childhood.jpg',
+                alt: 'Viet Le Duy childhood photo in Da Lat',
+                caption: 'A childhood memory from Da Lat.',
+            },
+            {
+                type: 'paragraph',
+                text: 'But maybe some things were already being planted quietly.',
+            },
+            {
+                type: 'paragraph',
+                text: 'When I was around four or five, my uncle was living at my grandfather\'s house while studying in Da Lat. He had a computer. I did not know it at the time, but having the chance to touch a computer that early was something rare. It opened a small door. Maybe that was one of the reasons I later became a little faster with computers, technology, and all the strange creative things that could happen on a screen.',
+            },
+            {
+                type: 'paragraph',
+                text: 'There was also art in the family, even if nobody called it that so loudly.',
+            },
+            {
+                type: 'paragraph',
+                text: 'My father was a photographer. He would go out to take pictures for tourists visiting Da Lat, sometimes going to hotels and calling clients down for their photos. Back then, not everyone had a camera. A photograph still felt like something special, something worth dressing up for, something worth keeping.',
+            },
+            {
+                type: 'paragraph',
+                text: 'My grandfather had his own kind of art too. He did pyrography, drawing with fire on wood. I still remember some of his works being really beautiful. Sadly, we did not keep them. They now exist only in memory, like smoke from something once burning.',
+            },
+            {
+                type: 'paragraph',
+                text: 'Later, my family opened a computer game shop. A few years after that, when the internet arrived, it became an internet game shop. The business was not very successful and eventually stopped when I was in second grade. But during that time, something important had already happened.',
+            },
+            {
+                type: 'paragraph',
+                text: 'I played games. I used Yahoo. I touched the early internet when it still felt like a secret universe. I started to feel the joy of making, discovering, and playing with cool things.',
+            },
+            {
+                type: 'paragraph',
+                text: 'It was not yet anything with a name.',
+            },
+            {
+                type: 'paragraph',
+                text: 'It was not yet something I could explain.',
+            },
+            {
+                type: 'paragraph',
+                text: 'It was not yet a career.',
+            },
+            {
+                type: 'paragraph',
+                text: 'It was just a cold city, a small kid, a family full of quiet art, and a computer screen glowing somewhere in the early years.',
+            },
+            {
+                type: 'paragraph',
+                text: 'That was where the first chapter began.',
+            },
         ],
     },
     2: {
         title: 'The Young Eager Boiz',
         kicker: 'Chapter 02',
-        lead: 'Rhythm came before strategy. Hip Hop gave the next chapter its pulse, attitude, and sense of movement.',
-        body: 'As I got older, Hip Hop became more than music. It was style, discipline, and identity all at once. The culture taught me to pay attention to energy, to timing, and to the way a strong point of view can change how people feel about a piece of work.',
+        lead: 'As I grew up, I still did not really know what I liked, who I wanted to become, or where I was heading.',
+        bodyBlocks: [
+            {
+                type: 'paragraph',
+                text: 'My family was running an internet shop at the time, so games and computers were already part of my daily life. But somehow, that made gaming feel almost normal to me. It was fun, but it was not the thing that lit the whole room on fire.',
+            },
+            {
+                type: 'paragraph',
+                text: 'Then something else appeared.',
+            },
+            {
+                type: 'image',
+                src: 'img/viethiphop9.jpg',
+                alt: 'Early schoolyard hip hop energy',
+                caption: 'The first pull toward movement.',
+            },
+            {
+                type: 'paragraph',
+                text: 'My first year of third grade was not exactly great in terms of studying. But one day, in the school backyard, I saw some older guys doing handstands and windmills. I had no idea what it was. I just knew it looked impossible, and therefore, extremely cool.',
+            },
+            {
+                type: 'paragraph',
+                text: 'I spent entire break times standing there, watching them practice.',
+            },
+            {
+                type: 'paragraph',
+                text: 'Until one day, I asked to join.',
+            },
+            {
+                type: 'paragraph',
+                text: 'That small question opened another door.',
+            },
+            {
+                type: 'paragraph',
+                text: 'Around that time, I found a video of Last For One performing at BOTY 2005. I still watch that showcase even now. The movement, the teamwork, the music, the wild tricks, the way everyone moved together with so much energy. Something in that video hit me hard. It pulled me into the world of b-boying before I even fully understood what that world was.',
+            },
+            {
+                type: 'image',
+                src: 'img/OMG crew.jpg',
+                alt: 'OMG Crew practice and crew spirit',
+                caption: 'OMG Crew era: loud, hungry, and full of energy.',
+            },
+            {
+                type: 'paragraph',
+                text: 'Not long after, I joined a neighborhood crew called OMG Crew.',
+            },
+            {
+                type: 'paragraph',
+                text: 'And suddenly, my memories had a soundtrack.',
+            },
+            {
+                type: 'paragraph',
+                text: 'We practiced. We battled. We joined showcases, competitions, and small events. We were young, loud, hungry, and full of energy. I will never forget that period. If Chapter 01 was quiet Da Lat mornings, this chapter was schoolyard concrete, spinning sneakers, sore arms, and the feeling of trying again after falling for the hundredth time.',
+            },
+            {
+                type: 'paragraph',
+                text: 'That became one of the strongest memories of my younger years.',
+            },
+            {
+                type: 'image',
+                src: 'img/viethiphop8.jpg',
+                alt: 'University Village practice floor',
+                caption: 'Early evenings in University Village.',
+            },
+            {
+                type: 'paragraph',
+                text: 'Later, I carried that love with me into university.',
+            },
+            {
+                type: 'paragraph',
+                text: 'My university was far from the center of Ho Chi Minh City, in an area we called the University Village. It had around eight universities gathered together, which made the whole place feel like a strange little country of students. I had more free time than I expected, so I started practicing alone on the ground floor of a student residence in the early evenings.',
+            },
+            {
+                type: 'paragraph',
+                text: 'Day after day, I kept going back.',
+            },
+            {
+                type: 'paragraph',
+                text: 'Then one day, another guy showed up at the exact same place to practice.',
+            },
+            {
+                type: 'paragraph',
+                text: 'I walked over and said, "Hey, let\'s do this together."',
+            },
+            {
+                type: 'paragraph',
+                text: 'That guy was Ti, now Minh Ti, a stand-up comedian and the CEO of Monstio, a creative studio focused on great cartoon character design. Even back then, he was already one of the most talented people I knew.',
+            },
+            {
+                type: 'image',
+                src: 'img/viethiphop4.jpg',
+                alt: 'Viet Le Duy and Minh Ti during practice days',
+                caption: 'Me and Minh Ti in those early practice years.',
+            },
+            {
+                type: 'paragraph',
+                text: 'For some reason, more and more people started showing up. One person became two. Two became a small group. And from that strange little gathering, we founded Monkeez Crew, the first hip hop crew in the area.',
+            },
+            {
+                type: 'paragraph',
+                text: 'To be honest, we were not exactly great at hip hop back then.',
+            },
+            {
+                type: 'paragraph',
+                text: 'But we had energy. And sometimes, energy is enough to start something.',
+            },
+            {
+                type: 'image',
+                src: 'img/viethiphop10.jpg',
+                alt: 'Crew growth and battles',
+                caption: 'From small gatherings to a bigger movement.',
+            },
+            {
+                type: 'paragraph',
+                text: 'A few months later, we met Waking Crew, another crew from the same area. They were all b-boys, and of course, they looked far cooler than us. They had tricks, power moves, and that sharper battle energy. Monkeez had some very weird basic hip hop moves.',
+            },
+            {
+                type: 'paragraph',
+                text: 'But it was fun.',
+            },
+            {
+                type: 'paragraph',
+                text: 'We met. We battled. We practiced. Then instead of staying separate, we decided to join forces and become something bigger.',
+            },
+            {
+                type: 'paragraph',
+                text: 'That was how Universe Family began.',
+            },
+            {
+                type: 'paragraph',
+                text: 'We practiced together, shared what we knew, created choreographies, joined local competitions, and even won a few awards. At some point, we became known around the University Village. We were not one of the greatest dance clubs in Ho Chi Minh City, but in our little world, we were something.',
+            },
+            {
+                type: 'paragraph',
+                text: 'At our peak, around 50 people joined the club and practiced together.',
+            },
+            {
+                type: 'paragraph',
+                text: 'For a while, it felt like it could last forever.',
+            },
+            {
+                type: 'paragraph',
+                text: 'But time does what time always does. People grew up. We went to work. Some started families. Life moved forward. The crews and the club are still there in some form, and the groove never really disappeared. But those exact days, that exact feeling, that exact wild happiness of being young together, those things belong to their own time now.',
+            },
+            {
+                type: 'paragraph',
+                text: 'Looking back, it still makes me feel something.',
+            },
+            {
+                type: 'paragraph',
+                text: 'We were not perfect. We were not famous. We were not supposed to become anything big.',
+            },
+            {
+                type: 'paragraph',
+                text: 'But somehow, we built a small world from nothing.',
+            },
+            {
+                type: 'paragraph',
+                text: 'And maybe that was one of the first times I learned how powerful a dream can become when people gather around it.',
+            },
+        ],
     },
     3: {
         title: 'Started The Creative Journey',
@@ -260,6 +464,47 @@ function syncChapterButtons(chapterId) {
 
 function renderChapterBody(chapter) {
     if (!chapterStoryBody) {
+        return;
+    }
+
+    if (Array.isArray(chapter.bodyBlocks) && chapter.bodyBlocks.length) {
+        const nodes = chapter.bodyBlocks
+            .map(block => {
+                if (!block || typeof block !== 'object') {
+                    return null;
+                }
+
+                if (block.type === 'image' && block.src) {
+                    const figure = document.createElement('figure');
+                    figure.className = 'chapter-story-media';
+
+                    const image = document.createElement('img');
+                    image.src = block.src;
+                    image.alt = block.alt || '';
+                    image.loading = 'lazy';
+                    image.decoding = 'async';
+                    figure.appendChild(image);
+
+                    if (block.caption) {
+                        const caption = document.createElement('figcaption');
+                        caption.textContent = block.caption;
+                        figure.appendChild(caption);
+                    }
+
+                    return figure;
+                }
+
+                if (block.type === 'paragraph' && block.text) {
+                    const paragraphNode = document.createElement('p');
+                    paragraphNode.textContent = block.text;
+                    return paragraphNode;
+                }
+
+                return null;
+            })
+            .filter(Boolean);
+
+        chapterStoryBody.replaceChildren(...nodes);
         return;
     }
 
