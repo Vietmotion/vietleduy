@@ -4,18 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Viet Le Duy - Creative Director</title>
+    <link rel="icon" type="image/png" href="img/vldlogo.png">
     <link rel="stylesheet" href="styles.css">
 </head>
-<body>
+<body data-theme="light">
     <!-- Navigation -->
     <nav>
         <div class="nav-container">
             <a href="#" class="logo" onclick="navigateTo('home'); return false;">VIET LE DUY</a>
-            <button class="menu-button" id="menuButton">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
+            <div class="nav-actions">
+                <button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle color mode"></button>
+                <button class="menu-button" id="menuButton" aria-label="Open menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
         </div>
     </nav>
 
@@ -24,100 +28,125 @@
         <button class="close-menu" id="closeMenu">&times;</button>
         <ul>
             <li><a href="#" data-page="home" class="nav-link">Home</a></li>
-            <li><a href="#" data-page="mighty-stone" class="nav-link">Mighty Stone</a></li>
             <li><a href="#" data-page="blog" class="nav-link">Blog</a></li>
+            <li><a href="#" data-page="gallery" class="nav-link">Painting Gallery</a></li>
             <li><a href="#" data-page="contact" class="nav-link">Contact</a></li>
         </ul>
     </div>
 
     <!-- Home Page -->
     <div id="home" class="page active">
-        <div class="hero">
-            <div class="hero-image">
-                <img src="img/VietAva02.png" alt="Viet Le Duy">
+        <section class="chapter-strip-section" id="chapterSelect" aria-label="Life chapters">
+            <div class="chapter-strip-rack" id="chapterRack">
+                <button type="button" class="chapter-strip active" data-chapter="1" aria-label="Chapter 1 Childhood">
+                    <span class="chapter-strip__image chapter-strip__image--1"></span>
+                    <span class="chapter-strip__overlay"></span>
+                    <span class="chapter-strip__meta">
+                        <span class="chapter-strip__number">01</span>
+                        <span class="chapter-strip__title">Childhood</span>
+                    </span>
+                </button>
+                <button type="button" class="chapter-strip" data-chapter="2" aria-label="Chapter 2 The Young Eager Boiz">
+                    <span class="chapter-strip__image chapter-strip__image--2"></span>
+                    <span class="chapter-strip__overlay"></span>
+                    <span class="chapter-strip__meta">
+                        <span class="chapter-strip__number">02</span>
+                        <span class="chapter-strip__title">The Young Eager Boiz</span>
+                    </span>
+                </button>
+                <button type="button" class="chapter-strip" data-chapter="3" aria-label="Chapter 3 Started The Creative Journey">
+                    <span class="chapter-strip__image chapter-strip__image--3"></span>
+                    <span class="chapter-strip__overlay"></span>
+                    <span class="chapter-strip__meta">
+                        <span class="chapter-strip__number">03</span>
+                        <span class="chapter-strip__title">Started The Creative Journey</span>
+                    </span>
+                </button>
+                <button type="button" class="chapter-strip" data-chapter="4" aria-label="Chapter 4 MIGHTY STONE">
+                    <span class="chapter-strip__image chapter-strip__image--4"></span>
+                    <span class="chapter-strip__overlay"></span>
+                    <span class="chapter-strip__meta">
+                        <span class="chapter-strip__number">04</span>
+                        <span class="chapter-strip__title">MIGHTY STONE</span>
+                    </span>
+                </button>
+                <button type="button" class="chapter-strip" data-chapter="5" aria-label="Chapter 5 Viet Le Duy - Creative Director">
+                    <span class="chapter-strip__image chapter-strip__image--5"></span>
+                    <span class="chapter-strip__overlay"></span>
+                    <span class="chapter-strip__meta">
+                        <span class="chapter-strip__number">05</span>
+                        <span class="chapter-strip__title">Viet Le Duy - Creative Director</span>
+                    </span>
+                </button>
+                <button type="button" class="chapter-strip chapter-strip--locked" data-chapter="6" data-locked="true" aria-label="Chapter 6 Locked">
+                    <span class="chapter-strip__image chapter-strip__image--locked"></span>
+                    <span class="chapter-strip__overlay"></span>
+                    <span class="chapter-strip__lock">Locked</span>
+                    <span class="chapter-strip__meta">
+                        <span class="chapter-strip__number">06</span>
+                        <span class="chapter-strip__title">...</span>
+                    </span>
+                </button>
+                <button type="button" class="chapter-strip chapter-strip--locked" data-chapter="7" data-locked="true" aria-label="Chapter 7 Locked">
+                    <span class="chapter-strip__image chapter-strip__image--locked"></span>
+                    <span class="chapter-strip__overlay"></span>
+                    <span class="chapter-strip__lock">Locked</span>
+                    <span class="chapter-strip__meta">
+                        <span class="chapter-strip__number">07</span>
+                        <span class="chapter-strip__title">...</span>
+                    </span>
+                </button>
+                <button type="button" class="chapter-strip chapter-strip--locked" data-chapter="8" data-locked="true" aria-label="Chapter 8 Locked">
+                    <span class="chapter-strip__image chapter-strip__image--locked"></span>
+                    <span class="chapter-strip__overlay"></span>
+                    <span class="chapter-strip__lock">Locked</span>
+                    <span class="chapter-strip__meta">
+                        <span class="chapter-strip__number">08</span>
+                        <span class="chapter-strip__title">...</span>
+                    </span>
+                </button>
+                <button type="button" class="chapter-strip chapter-strip--locked" data-chapter="9" data-locked="true" aria-label="Chapter 9 Locked">
+                    <span class="chapter-strip__image chapter-strip__image--locked"></span>
+                    <span class="chapter-strip__overlay"></span>
+                    <span class="chapter-strip__lock">Locked</span>
+                    <span class="chapter-strip__meta">
+                        <span class="chapter-strip__number">09</span>
+                        <span class="chapter-strip__title">...</span>
+                    </span>
+                </button>
+                <button type="button" class="chapter-strip chapter-strip--locked" data-chapter="10" data-locked="true" aria-label="Chapter 10 Thank you!">
+                    <span class="chapter-strip__image chapter-strip__image--locked"></span>
+                    <span class="chapter-strip__overlay"></span>
+                    <span class="chapter-strip__lock">Locked</span>
+                    <span class="chapter-strip__meta">
+                        <span class="chapter-strip__number">10</span>
+                        <span class="chapter-strip__title">Thank you!</span>
+                    </span>
+                </button>
             </div>
-            <div class="hero-content">
-                <h1>
-                    Hi, I'm <strong>Viet Le Duy</strong> — a Creative Director and founder of Mighty Stone.
-                </h1>
-                <p>
-                    I work with brands and teams to craft meaningful visuals that blend creativity, design, and storytelling. I believe every brand has its own character and untapped possibilities. My goal is to uncover that essence and transform it into work that stands out — and creates real value.
-                </p>
+        </section>
+
+        <section class="chapter-story-panel" id="chapterStoryPanel">
+            <div class="chapter-story-kicker" id="chapterStoryKicker">Chapter 01</div>
+            <h2 id="chapterStoryTitle">Childhood</h2>
+            <p class="chapter-story-lead" id="chapterStoryLead">I was born in Da Lat, the cold and beautiful mountain city that I still think of as one of the best places in Vietnam.</p>
+            <div id="chapterStoryBody" class="chapter-story-body">
+                <p>Back then, life moved slowly. The city was quiet, the mornings were cold, and sometimes I could see my own breath in the air on the way to school. There was no big dream in my head yet. No clear direction. Just a little kid growing up among the hills, going to school in the morning, walking home in the afternoon, living a life that did not seem very different from anyone else's.</p>
             </div>
-        </div>
-
-        <div class="quote-section">
-            <blockquote>
-                "Creativity is not about adding more — it's about uncovering what's already there, waiting to be seen."
-            </blockquote>
-        </div>
-
-        <div class="story-section">
-            <div class="story-container">
-                <h2>The Journey</h2>
-                <div class="story-content">
-                    <p>
-                        I’ve been drawn to creating things from a very young age — not just for the joy of making, but for the idea that what you create can serve a real purpose. Early on, I became fascinated by how visuals, systems, and ideas could come together to solve problems and communicate meaning.
-                    </p>
-                    <p>
-                        Over time, that curiosity grew into a clear direction: using creativity as a tool for businesses. Not decoration, not trends — but thoughtful visual solutions that help brands explain what they do, connect with people, and move forward with confidence.
-                    </p>
-                    <p>
-                        That belief eventually became Mighty Stone — a creative studio built to deliver meaningful services, not just outputs. We create products, visuals, and stories that are designed to work: to clarify messages, strengthen brands, and support real business goals.
-                    </p>
-                    <p>
-                        Alongside serving clients, I’m also building something just as important to me — a creative environment where people can grow, think deeply, and do work they’re proud of. A place where creativity is respected, problems are worth solving, and good work is the standard.
-                    </p>
-                    <p>
-                        This journey is ongoing.
-                        And everything I build today is shaped by that same idea: creation should always matter.
-                    </p>
-                </div>
+            <div class="chapter-story-actions">
+                <button type="button" class="chapter-story-nav chapter-story-nav--previous" id="prevChapter">
+                    <span class="chapter-story-nav__label">Previous chapter</span>
+                </button>
+                <button type="button" class="chapter-story-nav chapter-story-nav--accent chapter-story-nav--next" id="nextChapter">
+                    <span class="chapter-story-nav__label">Next chapter</span>
+                </button>
             </div>
-        </div>
-
-        <div class="mighty-stone-home-section">
-            <div class="mighty-stone-home-container">
-                <div class ="msimg1">
-                        <img src="img/mslogo02.png" alt="Ice logo on ice podium">
-                </div>
-                <div class="mighty-stone-home-content">
-                    <h2>Mighty Stone</h2>
-                    <p>
-                        Mighty Stone isn't just a studio — it's a philosophy. Founded on the belief that every brand has an untold story worth discovering, we work with companies who aren't afraid to stand out and make a real impact.
-                    </p>
-                    <p>
-                        We're a team of creative thinkers, strategic minds, and visual storytellers who believe that great work comes from deep collaboration. We don't just execute briefs — we partner with our clients to uncover what makes them unique and translate that into work that resonates.
-                    </p>
-                    <p>
-                        From startups finding their voice to established brands reinventing themselves, we bring clarity, creativity, and strategic thinking to every project. Our approach is simple: listen deeply, think boldly, create purposefully.
-                    </p>
-                    <div class="cta-buttons">
-                        <a href="#" class="cta-button" onclick="navigateTo('mighty-stone'); return false;">Explore What We Do</a>
-                        <a href="https://www.mightystone.vn/" class="cta-button cta-button-outline" target="_blank">Visit Mighty Stone</a>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-
-        <div class="container">
-            <div class="stats">
-                <div class="stat-item">
-                    <div class="stat-number">10+</div>
-                    <div class="stat-label">Years Experience</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number">100+</div>
-                    <div class="stat-label">Projects Delivered</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number">50+</div>
-                    <div class="stat-label">Happy Clients</div>
-                </div>
-            </div>
-        </div>
+        </section>
     </div>
+
+    <button type="button" class="move-up-button" id="moveUpButton" aria-label="Scroll back to chapter select">
+        <span class="move-up-button__icon" aria-hidden="true">↑</span>
+    </button>
 
     <!-- Mighty Stone Page -->
     <div id="mighty-stone" class="page">
@@ -234,6 +263,41 @@
     <div id="blog-post-3" class="page" data-post="blog-post-3"></div>
     <div id="blog-post-4" class="page" data-post="blog-post-4"></div>
 
+    <!-- Painting Gallery Page -->
+    <div id="gallery" class="page">
+        <div class="container gallery-page">
+            <p class="section-kicker">Painting Gallery</p>
+            <h1 class="section-title">A second archive, ready for color</h1>
+            <p class="gallery-intro">This page is separated from the landing story and ready for your paintings. Add the artwork later and the layout will already be waiting.</p>
+            <div class="gallery-grid">
+                <div class="gallery-tile gallery-tile--large">
+                    <span>Painting 01</span>
+                    <p>Placeholder for your main featured piece.</p>
+                </div>
+                <div class="gallery-tile">
+                    <span>Painting 02</span>
+                    <p>Secondary artwork slot.</p>
+                </div>
+                <div class="gallery-tile">
+                    <span>Painting 03</span>
+                    <p>Secondary artwork slot.</p>
+                </div>
+                <div class="gallery-tile gallery-tile--wide">
+                    <span>Painting 04</span>
+                    <p>Wide composition placeholder.</p>
+                </div>
+                <div class="gallery-tile">
+                    <span>Painting 05</span>
+                    <p>Secondary artwork slot.</p>
+                </div>
+                <div class="gallery-tile">
+                    <span>Painting 06</span>
+                    <p>Secondary artwork slot.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Contact Page -->
     <div id="contact" class="page">
         <div class="container">
@@ -244,11 +308,11 @@
                 <div class="contact-methods">
                     <div class="contact-item">
                         <h3>Email</h3>
-                        <a href="mailto:viet@mightystone.studio">vietle@mightystone.vn</a>
+                        <a href="mailto:vietle@mightystone.vn">vietle@mightystone.vn</a>
                     </div>
                     <div class="contact-item">
                         <h3>Phone Number</h3>
-                        <a href="tel:+84901234567">+84 899 312 653</a>
+                        <a href="tel:+84899312653">+84 899 312 653</a>
                     </div>
                     <div class="contact-item">
                         <h3>Location</h3>
@@ -261,7 +325,20 @@
 
     <!-- Footer -->
     <footer>
-        <p>&copy; 2026 Viet Le Duy. All rights reserved.</p>
+        <div class="footer-inner">
+            <div class="footer-contact-links">
+                <a href="mailto:vietle@mightystone.vn">vietle@mightystone.vn</a>
+                <a href="tel:+84899312653">+84 899 312 653</a>
+            </div>
+            <div class="footer-meta">
+                <div class="footer-social-links" aria-label="Social links">
+                    <a href="https://www.facebook.com/" class="footer-social-link" aria-label="Facebook" target="_blank" rel="noreferrer noopener">Fb</a>
+                    <a href="https://www.instagram.com/" class="footer-social-link" aria-label="Instagram" target="_blank" rel="noreferrer noopener">Ig</a>
+                    <a href="https://www.behance.net/" class="footer-social-link" aria-label="Behance" target="_blank" rel="noreferrer noopener">Be</a>
+                </div>
+                <p>&copy; 2026 Viet Le Duy. All rights reserved.</p>
+            </div>
+        </div>
     </footer>
 
     <script src="script.js"></script>
