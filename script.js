@@ -19,6 +19,225 @@ const prevChapterButton = document.getElementById('prevChapter');
 const nextChapterButton = document.getElementById('nextChapter');
 const chapterSelectSection = document.getElementById('chapterSelect');
 const moveUpButton = document.getElementById('moveUpButton');
+const artVinylButtons = Array.from(document.querySelectorAll('.art-vinyl-piece'));
+const artSelectedTitle = document.getElementById('artSelectedTitle');
+const artSelectedMeta = document.getElementById('artSelectedMeta');
+const artSelectedDescription = document.getElementById('artSelectedDescription');
+const artSelectedTags = document.getElementById('artSelectedTags');
+const artSelectedImage = document.getElementById('artSelectedImage');
+const artTurntableVisual = document.getElementById('artTurntableVisual');
+const artVinylStack = document.getElementById('artVinylStack');
+const artVinylStage = document.querySelector('.art-vinyl-stage');
+const artFullviewButton = document.getElementById('artFullviewButton');
+const artModal = document.getElementById('artModal');
+const artModalClose = document.getElementById('artModalClose');
+const artModalImage = document.getElementById('artModalImage');
+const artModalCaption = document.getElementById('artModalCaption');
+
+let currentArtId = 'lola-trip';
+let showcaseSnapTimeout = null;
+let isShowcaseSnapping = false;
+
+artVinylButtons.forEach((button, index) => {
+    const centerIndex = (artVinylButtons.length - 1) / 2;
+    const spreadIndex = index - centerIndex;
+    const depth = index * 1.25;
+    const isFirst = index === 0;
+    const isLast = index === artVinylButtons.length - 1;
+
+    let edgeHoverShift = 0;
+    let edgeSelectShift = 0;
+
+    if (isFirst) {
+        edgeHoverShift = 1.15;
+        edgeSelectShift = 2.05;
+    } else if (isLast) {
+        edgeHoverShift = -1.15;
+        edgeSelectShift = -2.05;
+    }
+
+    button.style.setProperty('--stack-x', `${spreadIndex * 0.95}rem`);
+    button.style.setProperty('--stack-y', `${Math.abs(spreadIndex) * 0.08}rem`);
+    button.style.setProperty('--stack-z', `${depth}px`);
+    button.style.setProperty('--stack-rot-x', `${10 + Math.abs(spreadIndex) * 0.14}deg`);
+    button.style.setProperty('--stack-rot-y', `${spreadIndex * 2.15}deg`);
+    button.style.setProperty('--stack-rot-z', `${spreadIndex * 0.12}deg`);
+    button.style.setProperty('--stack-order', String(100 - Math.abs(spreadIndex)));
+    button.style.setProperty('--edge-hover-shift', `${edgeHoverShift}rem`);
+    button.style.setProperty('--edge-select-shift', `${edgeSelectShift}rem`);
+});
+
+function updateArtStackGutters() {
+    if (!artVinylStack || !artVinylButtons.length) {
+        return;
+    }
+
+    const sampleCard = artVinylButtons[0];
+    const gutter = Math.max(18, (artVinylStack.clientWidth - sampleCard.offsetWidth) / 2);
+    artVinylStack.style.paddingLeft = `${gutter}px`;
+    artVinylStack.style.paddingRight = `${gutter}px`;
+}
+
+function isGalleryPageActive() {
+    const activePage = document.querySelector('.page.active');
+    return activePage?.id === 'gallery';
+}
+
+function shouldAutoScrollOnHover(button) {
+    if (!artVinylStack || !button) {
+        return false;
+    }
+
+    const stackRect = artVinylStack.getBoundingClientRect();
+    const buttonRect = button.getBoundingClientRect();
+    const edgeTrigger = Math.max(72, stackRect.width * 0.18);
+    const nearLeft = buttonRect.left <= stackRect.left + edgeTrigger;
+    const nearRight = buttonRect.right >= stackRect.right - edgeTrigger;
+
+    return nearLeft || nearRight;
+}
+
+function maybeSnapToShowcase() {
+    if (!artVinylStage || !isGalleryPageActive() || isShowcaseSnapping) {
+        return;
+    }
+
+    const stageRect = artVinylStage.getBoundingClientRect();
+    const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
+    const stickyTopOffset = viewportHeight >= 1000 ? 56 : 28;
+    const isPartiallyCrossed = stageRect.top < viewportHeight * 0.28 && stageRect.bottom > viewportHeight * 0.58;
+    const isNearStage = stageRect.top < viewportHeight * 0.7 && stageRect.bottom > viewportHeight * 0.3;
+    const isMisaligned = Math.abs(stageRect.top - stickyTopOffset) > 20;
+
+    if (!isPartiallyCrossed || !isNearStage || !isMisaligned) {
+        return;
+    }
+
+    isShowcaseSnapping = true;
+
+    const targetTop = Math.max(0, window.scrollY + stageRect.top - stickyTopOffset);
+    window.scrollTo({ top: targetTop, behavior: 'smooth' });
+
+    window.setTimeout(() => {
+        isShowcaseSnapping = false;
+    }, 520);
+}
+
+const artPieces = {
+    'lola-trip': {
+        title: 'Lola Trip',
+        type: '3D Art',
+        meta: 'Featured 3D work · 2026',
+        description: 'The first piece in the stack and the opening note for the 3D side of the archive.',
+        image: 'art/Lola Trip.png',
+        coverImage: 'art/Lola Trip.png',
+        alt: 'Lola Trip 3D artwork',
+        tags: ['3D Art', 'Featured', 'Lola Trip'],
+        background: 'radial-gradient(circle at 25% 15%, rgba(255, 255, 255, 0.34), transparent 28%), radial-gradient(circle at 70% 20%, rgba(255, 170, 100, 0.2), transparent 22%), linear-gradient(135deg, rgba(192, 129, 76, 0.94), rgba(124, 70, 36, 0.96))',
+    },
+    'painting-01': {
+        title: 'Room of Shelby',
+        type: '3D Art',
+        meta: '3D interior scene · 2026',
+        description: 'A cinematic interior frame with atmosphere and narrative lighting.',
+        image: 'art/Room of Shelby 16x9.png',
+        coverImage: 'art/Room of Shelby 16x9.png',
+        tags: ['3D Art', 'Interior', 'Cinematic'],
+        background: 'radial-gradient(circle at 25% 18%, rgba(255, 232, 188, 0.45), transparent 24%), linear-gradient(135deg, rgba(143, 90, 42, 0.96), rgba(204, 137, 84, 0.92))',
+    },
+    'digital-01': {
+        title: 'Omni Warrior',
+        type: '3D Art',
+        meta: 'Character concept render · 2026',
+        description: 'A stylized warrior composition with strong character silhouette and mood.',
+        image: 'art/Omni Warrior.png',
+        coverImage: 'art/Omni Warrior.png',
+        tags: ['3D Art', 'Character', 'Concept'],
+        background: 'radial-gradient(circle at 20% 18%, rgba(82, 211, 255, 0.45), transparent 24%), radial-gradient(circle at 82% 25%, rgba(170, 122, 255, 0.38), transparent 24%), linear-gradient(135deg, rgba(28, 34, 64, 0.98), rgba(60, 100, 180, 0.84))',
+    },
+    'motion-01': {
+        title: 'Temple of Anubis',
+        type: '3D Art',
+        meta: 'Environment render · 2022',
+        description: 'A world-building piece focused on monumental architecture and atmosphere.',
+        image: 'art/2022-Temple of Anubis.png',
+        coverImage: 'art/2022-Temple of Anubis.png',
+        tags: ['3D Art', 'Environment', 'Anubis'],
+        background: 'radial-gradient(circle at 22% 18%, rgba(165, 255, 228, 0.35), transparent 24%), radial-gradient(circle at 80% 30%, rgba(98, 163, 255, 0.36), transparent 24%), linear-gradient(135deg, rgba(5, 18, 27, 0.98), rgba(32, 105, 119, 0.84))',
+    },
+    '3d-02': {
+        title: 'Dune Monster',
+        type: '3D Art',
+        meta: 'Creature concept render · 2025',
+        description: 'A creature-focused 3D concept built around silhouette, texture, and atmosphere.',
+        image: 'art/Dune monster_2025.png',
+        coverImage: 'art/Dune monster_2025.png',
+        tags: ['3D Art', 'Creature', 'Concept'],
+        background: 'radial-gradient(circle at 26% 20%, rgba(255, 210, 150, 0.42), transparent 24%), linear-gradient(135deg, rgba(72, 48, 98, 0.96), rgba(174, 118, 79, 0.88))',
+    },
+    'painting-02': {
+        title: 'Too Much Vaping Today',
+        type: '3D Art',
+        meta: 'Character scene render · 2026',
+        description: 'A stylized 3D composition with a playful title and moody scene construction.',
+        image: 'art/ToMuch Vaping Today.png',
+        coverImage: 'art/ToMuch Vaping Today.png',
+        tags: ['3D Art', 'Scene', 'Character'],
+        background: 'radial-gradient(circle at 18% 18%, rgba(240, 209, 147, 0.42), transparent 24%), linear-gradient(135deg, rgba(100, 67, 44, 0.96), rgba(201, 132, 92, 0.88))',
+    },
+    'digital-02': {
+        title: 'Digital Study 02',
+        type: 'Digital Painting',
+        meta: 'Digital piece · coming later',
+        description: 'A second digital lane for sharper studies or stylized illustrations.',
+        image: 'art/2022-Temple of Anubis.png',
+        coverImage: 'art/2022-Temple of Anubis.png',
+        tags: ['Digital', 'Illustration', 'Study'],
+        background: 'radial-gradient(circle at 18% 22%, rgba(99, 243, 255, 0.36), transparent 24%), linear-gradient(135deg, rgba(19, 29, 51, 0.98), rgba(96, 92, 200, 0.84))',
+    },
+    'motion-02': {
+        title: 'Motion Loop 02',
+        type: 'Motion',
+        meta: 'Moving image · coming later',
+        description: 'A second motion slot for another short animated piece.',
+        image: 'art/Lola Trip.png',
+        coverImage: 'art/Lola Trip.png',
+        tags: ['Motion', 'Animation', 'Loop'],
+        background: 'radial-gradient(circle at 20% 18%, rgba(180, 255, 230, 0.32), transparent 24%), linear-gradient(135deg, rgba(8, 19, 28, 0.98), rgba(55, 137, 158, 0.84))',
+    },
+    '3d-03': {
+        title: '3D Project 03',
+        type: '3D Art',
+        meta: '3D render · coming later',
+        description: 'A third 3D slot for when you add another strong render.',
+        image: 'art/Omni Warrior.png',
+        coverImage: 'art/Omni Warrior.png',
+        tags: ['3D Art', 'Render', 'Coming soon'],
+        background: 'radial-gradient(circle at 24% 18%, rgba(255, 215, 160, 0.4), transparent 24%), linear-gradient(135deg, rgba(89, 58, 36, 0.96), rgba(180, 111, 72, 0.88))',
+    },
+    'reserved-10': {
+        title: 'Reserved 10',
+        type: 'Open slot',
+        meta: 'Reserved for later',
+        description: 'Leave this one open for the next standout piece that deserves a place in the stack.',
+        image: 'art/Room of Shelby 16x9.png',
+        coverImage: 'art/Room of Shelby 16x9.png',
+        tags: ['Reserved', 'Open slot'],
+        background: 'radial-gradient(circle at 24% 18%, rgba(255, 255, 255, 0.18), transparent 22%), linear-gradient(135deg, rgba(16, 19, 24, 0.98), rgba(71, 74, 80, 0.86))',
+    },
+};
+
+artVinylButtons.forEach(button => {
+    const piece = artPieces[button.dataset.artId];
+    if (!piece) {
+        return;
+    }
+
+    const coverImage = piece.coverImage || piece.image;
+    if (coverImage) {
+        button.style.setProperty('--vinyl-cover', `url("${coverImage}")`);
+    }
+});
 
 const chapterData = {
     1: {
@@ -252,10 +471,134 @@ const chapterData = {
         ],
     },
     3: {
-        title: 'Started The Creative Journey',
+        title: 'Started the Creative Journey',
         kicker: 'Chapter 03',
-        lead: 'Motion design was the bridge from curiosity to craft, beginning at 21ilab and continuing through Redcat Motion and DRAW.',
-        body: 'Those years were about learning how images can move, how pacing changes meaning, and how a team can turn abstract ideas into something memorable. 21ilab, Redcat Motion, and DRAW each shaped a different part of that path, and together they formed the foundation for the work I do now.',
+        lead: 'Eventually, I graduated from the University of Economics and Law, but the future still did not look clear to me.',
+        bodyBlocks: [
+            {
+                type: 'paragraph',
+                text: 'I studied at the University of Economics and Law, where I learned quite a lot about economics, business, and how the world is supposed to work on paper.',
+            },
+            {
+                type: 'paragraph',
+                text: 'But even with all that knowledge, the future still did not look clear to me.',
+            },
+            {
+                type: 'paragraph',
+                text: 'Knowing a little about economics did not suddenly give me a map. It did not tell me exactly what kind of work I should do, what kind of life I should build, or who I was supposed to become.',
+            },
+            {
+                type: 'paragraph',
+                text: 'But somewhere during those university years, I started to imagine something.',
+            },
+            {
+                type: 'paragraph',
+                text: 'I did not have the exact words for it yet, but I kept thinking about creating visual products for companies. Something with images. Something with design. Something that could help a business tell its story, explain what it does, and look better in the world.',
+            },
+            {
+                type: 'image',
+                src: 'img/earlycreative05.JPG',
+                alt: 'Early creative work image',
+                caption: 'An early creative moment before the path became clear.',
+                objectPosition: 'center 38%',
+            },
+            {
+                type: 'paragraph',
+                text: 'It was still blurry. But the shape was there.',
+            },
+            {
+                type: 'paragraph',
+                text: 'During my internship period near the end of my fourth year, I was lucky that I already knew a bit about motion graphics. That small skill opened the first professional door for me.',
+            },
+            {
+                type: 'paragraph',
+                text: 'I was accepted into a company with a parent company in Switzerland (21ilab). And for someone just starting out, that environment was incredibly valuable. I had the chance to work around people who were much more experienced than me, people who knew how professional work should be done, how ideas should be presented, how standards should be kept, and how a real team could operate.',
+            },
+            {
+                type: 'image',
+                src: 'img/21ilab.jpg',
+                alt: '21ilab team or workspace',
+                caption: 'My first professional door: 21ilab.',
+            },
+            {
+                type: 'paragraph',
+                text: 'That period gave me something important: a first look at the working world from inside the room. Not from school. Not from theory. But from actual people doing actual work.',
+            },
+            {
+                type: 'paragraph',
+                text: 'Later, I decided to move to Red Cat Motion, one of the leading animation studios in Vietnam at the time.',
+            },
+            {
+                type: 'paragraph',
+                text: 'That was another important step.',
+            },
+            {
+                type: 'paragraph',
+                text: 'At Red Cat Motion, I entered a more specialized creative environment, surrounded by people with strong skills, serious standards, and real industry experience. The work was sharper. The expectations were higher. The world of animation and motion design became more real to me.',
+            },
+            {
+                type: 'image',
+                src: 'img/rcm01.jpg',
+                alt: 'Red Cat Motion project or studio image 01',
+                caption: 'Red Cat Motion, where the work became sharper.',
+            },
+            {
+                type: 'paragraph',
+                text: 'But beyond the work, there was something else that stayed with me.',
+            },
+            {
+                type: 'paragraph',
+                text: 'I met people there who did not remain only as colleagues. Many of them became friends, creative companions, and people I would continue to talk to, learn from, exchange ideas with, and support through the many strange turns of the career journey later on.',
+            },
+            {
+                type: 'image',
+                src: 'img/rcm03.jpg',
+                alt: 'Red Cat Motion project or studio image 03',
+                caption: 'The people I met there stayed important long after the job changed.',
+            },
+            {
+                type: 'paragraph',
+                text: 'After that, I continued to another company (DRAV), where a different door opened.',
+            },
+            {
+                type: 'paragraph',
+                text: 'With the guidance of my leader there, I had the chance to step much deeper into the world of stage visuals and live events. This was where my 3D skills grew a lot. I worked on many large-scale events, where images were no longer just sitting on a screen. They became part of a stage, part of the lights, part of the music, part of a whole live experience happening in front of thousands of people.',
+            },
+            {
+                type: 'image',
+                src: 'img/phoenix matxi kids.jpg',
+                alt: 'Phoenix Matxi Kids stage visual or event image',
+                caption: 'Stage visuals moving into real live moments.',
+            },
+            {
+                type: 'paragraph',
+                text: 'That period was special.',
+            },
+            {
+                type: 'paragraph',
+                text: 'It stood somewhere between professional production and artistic expression. Between technical execution and the feeling of building something massive for a real audience. There were moments when the work was just one small part of a much bigger stage, but even that small part carried its own electricity.',
+            },
+            {
+                type: 'paragraph',
+                text: 'Looking back, I think this chapter was not about becoming great yet.',
+            },
+            {
+                type: 'paragraph',
+                text: 'It was about entering the field. It was about standing close to people who were better than me. It was about learning what professional creative work actually looked like. It was about discovering how far images could travel, from a computer screen to animation, from animation to stages, from stages to real emotions in a crowd.',
+            },
+            {
+                type: 'paragraph',
+                text: 'I still did not know exactly where the path would lead.',
+            },
+            {
+                type: 'paragraph',
+                text: 'But every place I passed through gave me something. Every team shaped me a little. Every project left a mark.',
+            },
+            {
+                type: 'paragraph',
+                text: 'And slowly, those experiences became part of the person I am today.',
+            },
+        ],
     },
     4: {
         title: 'MIGHTY STONE',
@@ -483,6 +826,9 @@ function renderChapterBody(chapter) {
                     image.alt = block.alt || '';
                     image.loading = 'lazy';
                     image.decoding = 'async';
+                    if (block.objectPosition) {
+                        image.style.objectPosition = block.objectPosition;
+                    }
                     figure.appendChild(image);
 
                     if (block.caption) {
@@ -689,6 +1035,98 @@ function updateMoveUpButtonVisibility() {
     moveUpButton.classList.toggle('is-visible', shouldShow);
 }
 
+function renderArtPiece(artId, options = {}) {
+    const shouldAutoScroll = options.autoScroll !== false;
+    const piece = artPieces[artId];
+
+    if (!piece) {
+        return;
+    }
+
+    currentArtId = artId;
+
+    artVinylButtons.forEach(button => {
+        const isSelected = button.dataset.artId === artId;
+        button.classList.toggle('active', isSelected);
+        button.classList.toggle('is-selected', isSelected);
+        button.setAttribute('aria-pressed', String(isSelected));
+    });
+
+    if (artSelectedTitle) {
+        artSelectedTitle.textContent = piece.title;
+    }
+
+    if (artSelectedMeta) {
+        artSelectedMeta.textContent = piece.meta;
+    }
+
+    if (artSelectedDescription) {
+        artSelectedDescription.textContent = piece.description;
+    }
+
+    if (artSelectedTags) {
+        artSelectedTags.innerHTML = piece.tags.map(tag => `<span>${tag}</span>`).join('');
+    }
+
+    if (artTurntableVisual) {
+        artTurntableVisual.style.background = piece.background;
+    }
+
+    if (artSelectedImage) {
+        if (piece.image) {
+            artSelectedImage.src = piece.image;
+            artSelectedImage.alt = piece.alt || piece.title;
+            artSelectedImage.hidden = false;
+        } else {
+            artSelectedImage.hidden = true;
+        }
+    }
+
+    const selectedButton = artVinylButtons.find(button => button.dataset.artId === artId);
+    if (selectedButton && artVinylStack && shouldAutoScroll) {
+        requestAnimationFrame(() => {
+            const targetLeft = selectedButton.offsetLeft - ((artVinylStack.clientWidth - selectedButton.offsetWidth) / 2);
+            const maxLeft = Math.max(0, artVinylStack.scrollWidth - artVinylStack.clientWidth);
+            const clampedLeft = Math.max(0, Math.min(targetLeft, maxLeft));
+
+            artVinylStack.scrollTo({
+                left: clampedLeft,
+                behavior: 'smooth',
+            });
+        });
+    }
+}
+
+function openArtModal() {
+    if (!artModal || !artModalImage) {
+        return;
+    }
+
+    const piece = artPieces[currentArtId];
+    if (!piece || !piece.image) {
+        return;
+    }
+
+    artModalImage.src = piece.image;
+    artModalImage.alt = piece.alt || piece.title;
+
+    if (artModalCaption) {
+        artModalCaption.textContent = `${piece.title} · ${piece.type}`;
+    }
+
+    artModal.hidden = false;
+    document.body.style.overflow = 'hidden';
+}
+
+function closeArtModal() {
+    if (!artModal) {
+        return;
+    }
+
+    artModal.hidden = true;
+    document.body.style.overflow = '';
+}
+
 const chapterButtons = Array.from(document.querySelectorAll('.chapter-strip'));
 
 chapterButtons.forEach(button => {
@@ -748,7 +1186,62 @@ if (moveUpButton) {
     });
 }
 
-window.addEventListener('scroll', updateMoveUpButtonVisibility, { passive: true });
+artVinylButtons.forEach(button => {
+    button.addEventListener('mouseenter', () => {
+        renderArtPiece(button.dataset.artId, {
+            autoScroll: shouldAutoScrollOnHover(button),
+        });
+    });
+
+    button.addEventListener('click', () => {
+        renderArtPiece(button.dataset.artId, { autoScroll: true });
+    });
+});
+
+if (artFullviewButton) {
+    artFullviewButton.addEventListener('click', openArtModal);
+}
+
+if (artModalClose) {
+    artModalClose.addEventListener('click', closeArtModal);
+}
+
+if (artModal) {
+    artModal.addEventListener('click', event => {
+        if (event.target === artModal) {
+            closeArtModal();
+        }
+    });
+}
+
+window.addEventListener('keydown', event => {
+    if (event.key === 'Escape' && artModal && !artModal.hidden) {
+        closeArtModal();
+    }
+});
+
+if (artVinylButtons.length) {
+    updateArtStackGutters();
+    renderArtPiece(artVinylButtons[0].dataset.artId);
+}
+
+if (window.scrollX !== 0) {
+    window.scrollTo({ left: 0, top: window.scrollY, behavior: 'auto' });
+}
+
+window.addEventListener('resize', updateArtStackGutters);
+
+window.addEventListener('scroll', () => {
+    updateMoveUpButtonVisibility();
+
+    if (showcaseSnapTimeout) {
+        window.clearTimeout(showcaseSnapTimeout);
+    }
+
+    showcaseSnapTimeout = window.setTimeout(() => {
+        maybeSnapToShowcase();
+    }, 95);
+}, { passive: true });
 
 if (themeToggle) {
     const storedTheme = localStorage.getItem('vld-theme');

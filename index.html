@@ -29,7 +29,7 @@
         <ul>
             <li><a href="#" data-page="home" class="nav-link">Home</a></li>
             <li><a href="#" data-page="blog" class="nav-link">Blog</a></li>
-            <li><a href="#" data-page="gallery" class="nav-link">Painting Gallery</a></li>
+            <li><a href="#" data-page="gallery" class="nav-link">Art</a></li>
             <li><a href="#" data-page="contact" class="nav-link">Contact</a></li>
         </ul>
     </div>
@@ -54,12 +54,12 @@
                         <span class="chapter-strip__title">The Young Eager Boiz</span>
                     </span>
                 </button>
-                <button type="button" class="chapter-strip" data-chapter="3" aria-label="Chapter 3 Started The Creative Journey">
+                <button type="button" class="chapter-strip" data-chapter="3" aria-label="Chapter 3 Started the Creative Journey">
                     <span class="chapter-strip__image chapter-strip__image--3"></span>
                     <span class="chapter-strip__overlay"></span>
                     <span class="chapter-strip__meta">
                         <span class="chapter-strip__number">03</span>
-                        <span class="chapter-strip__title">Started The Creative Journey</span>
+                        <span class="chapter-strip__title">Started the Creative Journey</span>
                     </span>
                 </button>
                 <button type="button" class="chapter-strip" data-chapter="4" aria-label="Chapter 4 MIGHTY STONE">
@@ -263,39 +263,96 @@
     <div id="blog-post-3" class="page" data-post="blog-post-3"></div>
     <div id="blog-post-4" class="page" data-post="blog-post-4"></div>
 
-    <!-- Painting Gallery Page -->
+    <!-- Selected Works Page -->
     <div id="gallery" class="page">
         <div class="container gallery-page">
-            <p class="section-kicker">Painting Gallery</p>
-            <h1 class="section-title">A second archive, ready for color</h1>
-            <p class="gallery-intro">This page is separated from the landing story and ready for your paintings. Add the artwork later and the layout will already be waiting.</p>
-            <div class="gallery-grid">
-                <div class="gallery-tile gallery-tile--large">
-                    <span>Painting 01</span>
-                    <p>Placeholder for your main featured piece.</p>
+            <section class="art-vinyl-stage" aria-label="Art selection area">
+                <div class="art-turntable" id="artTurntable">
+                    <div class="art-turntable__label">
+                        <p class="art-turntable__kicker">Now playing</p>
+                        <h2 id="artSelectedTitle">Lola Trip</h2>
+                        <p id="artSelectedMeta">3D Art · 2026</p>
+                        <p id="artSelectedDescription">The first piece in the stack and the opening note for the 3D side of the archive.</p>
+                        <div class="gallery-tags" id="artSelectedTags" aria-label="Selected artwork tags">
+                            <span>3D Art</span>
+                            <span>Featured</span>
+                            <span>Lola Trip</span>
+                        </div>
+                    </div>
+                    <figure class="art-turntable__visual" id="artTurntableVisual">
+                        <img id="artSelectedImage" src="art/Lola Trip.png" alt="Lola Trip 3D artwork">
+                        <button type="button" class="art-fullview-button" id="artFullviewButton" aria-label="Open full view">Full view</button>
+                    </figure>
                 </div>
-                <div class="gallery-tile">
-                    <span>Painting 02</span>
-                    <p>Secondary artwork slot.</p>
+
+                <div class="art-vinyl-crate">
+                    <div class="art-vinyl-stack" id="artVinylStack" aria-label="Art stack">
+                        <button type="button" class="art-vinyl-piece active" data-art-id="lola-trip" aria-pressed="true">
+                            <span class="art-vinyl-piece__index">01</span>
+                            <span class="art-vinyl-piece__title">Lola Trip</span>
+                            <span class="art-vinyl-piece__type">3D Art</span>
+                        </button>
+                        <button type="button" class="art-vinyl-piece" data-art-id="painting-01" aria-pressed="false">
+                            <span class="art-vinyl-piece__index">02</span>
+                            <span class="art-vinyl-piece__title">Room of Shelby</span>
+                            <span class="art-vinyl-piece__type">3D Art</span>
+                        </button>
+                        <button type="button" class="art-vinyl-piece" data-art-id="digital-01" aria-pressed="false">
+                            <span class="art-vinyl-piece__index">03</span>
+                            <span class="art-vinyl-piece__title">Omni Warrior</span>
+                            <span class="art-vinyl-piece__type">3D Art</span>
+                        </button>
+                        <button type="button" class="art-vinyl-piece" data-art-id="motion-01" aria-pressed="false">
+                            <span class="art-vinyl-piece__index">04</span>
+                            <span class="art-vinyl-piece__title">Temple of Anubis</span>
+                            <span class="art-vinyl-piece__type">3D Art</span>
+                        </button>
+                        <button type="button" class="art-vinyl-piece" data-art-id="3d-02" aria-pressed="false">
+                            <span class="art-vinyl-piece__index">05</span>
+                            <span class="art-vinyl-piece__title">Dune Monster</span>
+                            <span class="art-vinyl-piece__type">3D Art</span>
+                        </button>
+                        <button type="button" class="art-vinyl-piece" data-art-id="painting-02" aria-pressed="false">
+                            <span class="art-vinyl-piece__index">06</span>
+                            <span class="art-vinyl-piece__title">Too Much Vaping Today</span>
+                            <span class="art-vinyl-piece__type">3D Art</span>
+                        </button>
+                        <button type="button" class="art-vinyl-piece" data-art-id="digital-02" aria-pressed="false">
+                            <span class="art-vinyl-piece__index">07</span>
+                            <span class="art-vinyl-piece__title">Digital Study 02</span>
+                            <span class="art-vinyl-piece__type">Digital Painting</span>
+                        </button>
+                        <button type="button" class="art-vinyl-piece" data-art-id="motion-02" aria-pressed="false">
+                            <span class="art-vinyl-piece__index">08</span>
+                            <span class="art-vinyl-piece__title">Motion Loop 02</span>
+                            <span class="art-vinyl-piece__type">Motion</span>
+                        </button>
+                        <button type="button" class="art-vinyl-piece" data-art-id="3d-03" aria-pressed="false">
+                            <span class="art-vinyl-piece__index">09</span>
+                            <span class="art-vinyl-piece__title">3D Project 03</span>
+                            <span class="art-vinyl-piece__type">3D Art</span>
+                        </button>
+                        <button type="button" class="art-vinyl-piece" data-art-id="reserved-10" aria-pressed="false">
+                            <span class="art-vinyl-piece__index">10</span>
+                            <span class="art-vinyl-piece__title">Reserved 10</span>
+                            <span class="art-vinyl-piece__type">Open slot</span>
+                        </button>
+                    </div>
                 </div>
-                <div class="gallery-tile">
-                    <span>Painting 03</span>
-                    <p>Secondary artwork slot.</p>
-                </div>
-                <div class="gallery-tile gallery-tile--wide">
-                    <span>Painting 04</span>
-                    <p>Wide composition placeholder.</p>
-                </div>
-                <div class="gallery-tile">
-                    <span>Painting 05</span>
-                    <p>Secondary artwork slot.</p>
-                </div>
-                <div class="gallery-tile">
-                    <span>Painting 06</span>
-                    <p>Secondary artwork slot.</p>
-                </div>
-            </div>
+            </section>
+
+            <p class="section-kicker">Art</p>
+            <h1 class="section-title">Selected pieces from paintings, digital work, 3D, and motion.</h1>
+            <p class="gallery-intro">This page is built like a record crate. The strongest piece sits on the turntable, while the rest stack below like vinyl sleeves waiting to be pulled out.</p>
         </div>
+    </div>
+
+    <div class="art-modal" id="artModal" hidden>
+        <button type="button" class="art-modal__close" id="artModalClose" aria-label="Close full view">&times;</button>
+        <figure class="art-modal__content">
+            <img id="artModalImage" src="" alt="">
+            <figcaption id="artModalCaption"></figcaption>
+        </figure>
     </div>
 
     <!-- Contact Page -->
@@ -341,6 +398,7 @@
         </div>
     </footer>
 
+    <script type="module" src="firebase-visit-tracker.js"></script>
     <script src="script.js"></script>
 </body>
 </html>

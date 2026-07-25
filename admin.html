@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Analytics - Viet Le Duy</title>
+    <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+    <main class="admin-shell">
+        <header class="admin-header">
+            <p class="admin-kicker">Private Dashboard</p>
+            <h1>Visitor Report</h1>
+            <p class="admin-subtitle">Track total visits and see where visitors come from, including Vietnam vs other countries.</p>
+        </header>
+
+        <section class="metric-grid" aria-label="Visitor summary">
+            <article class="metric-card">
+                <h2>Total Visits</h2>
+                <p class="metric-value" id="totalVisits">-</p>
+            </article>
+            <article class="metric-card">
+                <h2>Vietnam</h2>
+                <p class="metric-value" id="vietnamVisits">-</p>
+            </article>
+            <article class="metric-card">
+                <h2>Other Countries</h2>
+                <p class="metric-value" id="otherVisits">-</p>
+            </article>
+            <article class="metric-card">
+                <h2>Tracked Countries</h2>
+                <p class="metric-value" id="countryCount">-</p>
+            </article>
+        </section>
+
+        <section class="panel">
+            <div class="panel-heading">
+                <h2>Country Breakdown</h2>
+                <button type="button" id="refreshButton" class="refresh-button">Refresh</button>
+            </div>
+            <p id="statusMessage" class="status-message">Loading visit data...</p>
+            <div id="countryRows" class="country-rows"></div>
+        </section>
+
+        <section class="panel">
+            <h2>Recent Visits</h2>
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Time (UTC)</th>
+                            <th>Country</th>
+                            <th>Region</th>
+                            <th>City</th>
+                            <th>Language</th>
+                        </tr>
+                    </thead>
+                    <tbody id="recentVisitsBody"></tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <script type="module" src="admin.js"></script>
+</body>
+</html>

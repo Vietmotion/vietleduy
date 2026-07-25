@@ -1,0 +1,41 @@
+Date: 2026-07-25
+Project: Viet Le Duy personal website
+
+What we did today:
+- Added and refined the Art showcase vinyl interaction system and selected-piece turntable view.
+- Added full-view modal popup for artworks with close behavior (button, backdrop click, Escape).
+- Integrated new artwork assets and updated slot metadata/titles.
+- Tuned horizontal auto-scroll behavior to trigger only near strip edges.
+- Added showcase snap/sticky-like alignment behavior for cleaner section positioning.
+- Optimized Art layout for HD screens (1920x1080) with better vertical framing.
+- Updated Full view button styling to a calmer, darker, low-saturation palette.
+- Added analytics/admin page scaffolding with Firebase visit tracking integration files.
+
+Bugs fixed today:
+- Reduced over-sensitive hover auto-scroll in the vinyl strip.
+- Improved first/last vinyl card active movement so edge fade does not hide too much.
+- Prevented awkward half-in/half-out resting in the showcase area via snap alignment.
+- Corrected over-bright call-to-action styling for the Full view button.
+
+Current structure:
+- index.html
+- styles.css
+- script.js
+- admin.html
+- admin.css
+- admin.js
+- firebase-config.js
+- firebase-visit-tracker.js
+- blog-posts/blog-post-1.html
+- blog-posts/blog-post-2.html
+- blog-posts/blog-post-3.html
+- blog-posts/blog-post-4.html
+- log/2026-04-01.txt
+- log/2026-04-02.txt
+- log/2026-07-01.txt
+- log/2026-07-25.txt
+
+Next suggested tasks:
+- Replace Firebase placeholder credentials with production config and verify Firestore rules.
+- Add region-level charts in the admin page (daily and monthly trends).
+- Add keyboard-accessible focus styles for the full-view modal close flow.
