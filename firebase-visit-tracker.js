@@ -4,6 +4,47 @@ import { firebaseConfig, visitsCollectionName } from "./firebase-config.js";
 
 const SESSION_VISIT_KEY = "vld_visit_logged_v1";
 
+function normalizePageName(pageName) {
+    if (!pageName) {
+        return "home";
+    }
+
+    const cleaned = String(pageName).trim();
+    if (!cleaned || cleaned === "/" || cleaned === "home") {
+        return "home";
+    }
+
+    const withoutSlash = cleaned.replace(/^\//, "").split("?")[0].split("#")[0];
+    return withoutSlash || "home";
+}
+
+function getPageLabel(pageName) {
+    const normalized = normalizePageName(pageName);
+    const labels = {
+        home: "Home",
+        about: "About",
+        art: "Art",
+        blog: "Blog",
+        gallery: "Gallery",
+        "blog-post-1": "The Art of Restraint in Modern Design",
+        "blog-post-2": "Designing for Clarity and Confidence",
+        "blog-post-3": "Tư duy thiết kế tối giản",
+        "blog-post-4": "Cách xây dựng thương hiệu bền vững",
+    };
+
+    return labels[normalized] || normalized.replace(/-/g, " ");
+}
+
+function getCurrentPageName() {
+    const activePage = document.querySelector(".page.active");
+    if (activePage && activePage.id) {
+        return activePage.id;
+    }
+
+    const path = normalizePageName(window.location.pathname);
+    return path;
+}
+
 function hasFirebaseConfig() {
     return firebaseConfig.projectId && firebaseConfig.projectId !== "YOUR_PROJECT_ID";
 }
@@ -41,8 +82,11 @@ async function fetchGeoData() {
     }
 }
 
-async function trackVisit() {
-    if (sessionStorage.getItem(SESSION_VISIT_KEY)) {
+async function trackPageView(pageName) {
+    const resolvedPageName = normalizePageName(pageName || getCurrentPageName());
+    const sessionKey = `${SESSION_VISIT_KEY}_${resolvedPageName}`;
+
+    if (sessionStorage.getItem(sessionKey)) {
         return;
     }
 
@@ -59,16 +103,28 @@ async function trackVisit() {
         await addDoc(collection(db, visitsCollectionName), {
             visitedAt: serverTimestamp(),
             page: window.location.pathname,
+            pageName: resolvedPageName,
+            pageLabel: getPageLabel(resolvedPageName),
             referrer: document.referrer || "direct",
             language: navigator.language || "unknown",
             timezone: Intl.DateTimeFormat().resolvedOptions().timeZone || "unknown",
             ...geo,
         });
 
-        sessionStorage.setItem(SESSION_VISIT_KEY, "1");
+        sessionStorage.setItem(sessionKey, "1");
     } catch (error) {
         console.error("Failed to write visit analytics:", error);
     }
 }
+
+async function trackVisit() {
+    const pageName = getCurrentPageName();
+    await trackPageView(pageName);
+}
+
+window.addEventListener("pageview", (event) => {
+    const pageName = event?.detail?.pageName || getCurrentPageName();
+    trackPageView(pageName);
+});
 
 trackVisit();

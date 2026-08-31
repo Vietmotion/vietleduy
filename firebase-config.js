@@ -1,12 +1,12 @@
-// Replace these values with your Firebase project settings.
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 export const firebaseConfig = {
-    apiKey: "YOUR_API_KEY",
-    authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-    projectId: "YOUR_PROJECT_ID",
-    storageBucket: "YOUR_PROJECT_ID.firebasestorage.app",
-    messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-    appId: "YOUR_APP_ID",
+  apiKey: "AIzaSyB3G4OZruF8bHxM2LU3rmJOL7G7LSdeiHA",
+  authDomain: "vietleduy-3443d.firebaseapp.com",
+  projectId: "vietleduy-3443d",
+  storageBucket: "vietleduy-3443d.firebasestorage.app",
+  messagingSenderId: "820193512105",
+  appId: "1:820193512105:web:b6da4df21790ae35d5f7b8",
+  measurementId: "G-HF84JHQJC6"
 };
 
-// Collection that stores one document per tracked visit.
 export const visitsCollectionName = "page_visits";

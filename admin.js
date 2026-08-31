@@ -14,9 +14,23 @@ const vietnamVisitsEl = document.getElementById("vietnamVisits");
 const otherVisitsEl = document.getElementById("otherVisits");
 const countryCountEl = document.getElementById("countryCount");
 const countryRowsEl = document.getElementById("countryRows");
+const pageRowsEl = document.getElementById("pageRows");
+const blogRowsEl = document.getElementById("blogRows");
 const recentVisitsBodyEl = document.getElementById("recentVisitsBody");
 const statusMessageEl = document.getElementById("statusMessage");
 const refreshButton = document.getElementById("refreshButton");
+
+const pageNameLabels = {
+    home: "Home",
+    about: "About",
+    art: "Art",
+    blog: "Blog",
+    gallery: "Gallery",
+    "blog-post-1": "Blog: The Art of Restraint in Modern Design",
+    "blog-post-2": "Blog: Designing for Clarity and Confidence",
+    "blog-post-3": "Blog: Tư duy thiết kế tối giản",
+    "blog-post-4": "Blog: Cách xây dựng thương hiệu bền vững",
+};
 
 let db;
 
@@ -37,15 +51,15 @@ function toUtcString(dateValue) {
     return date.toISOString().replace("T", " ").slice(0, 19);
 }
 
-function renderCountryRows(countryEntries, total) {
-    countryRowsEl.innerHTML = "";
+function renderCountRows(container, entries, total, labelText, emptyText) {
+    container.innerHTML = "";
 
-    if (!countryEntries.length) {
-        countryRowsEl.innerHTML = "<p>No visit records yet.</p>";
+    if (!entries.length) {
+        container.innerHTML = `<p>${emptyText}</p>`;
         return;
     }
 
-    countryEntries.forEach(([country, count]) => {
+    entries.forEach(([name, count]) => {
         const ratio = total > 0 ? (count / total) * 100 : 0;
 
         const row = document.createElement("article");
@@ -53,8 +67,8 @@ function renderCountryRows(countryEntries, total) {
         row.innerHTML = `
             <div>
                 <div class="country-meta">
-                    <span class="country-name">${country}</span>
-                    <span class="country-value">${count} visit(s) · ${ratio.toFixed(1)}%</span>
+                    <span class="country-name">${name}</span>
+                    <span class="country-value">${count} ${labelText} · ${ratio.toFixed(1)}%</span>
                 </div>
                 <div class="bar-wrap">
                     <div class="bar-fill" style="width: ${Math.min(100, ratio).toFixed(2)}%"></div>
@@ -62,8 +76,20 @@ function renderCountryRows(countryEntries, total) {
             </div>
         `;
 
-        countryRowsEl.appendChild(row);
+        container.appendChild(row);
     });
+}
+
+function renderCountryRows(countryEntries, total) {
+    renderCountRows(countryRowsEl, countryEntries, total, "visit(s)", "No visit records yet.");
+}
+
+function renderPageRows(pageEntries, total) {
+    renderCountRows(pageRowsEl, pageEntries, total, "view(s)", "No page views yet.");
+}
+
+function renderBlogRows(blogEntries, total) {
+    renderCountRows(blogRowsEl, blogEntries, total, "read(s)", "No blog reads yet.");
 }
 
 function renderRecentVisits(visits) {
@@ -108,6 +134,8 @@ async function loadVisitReport() {
 
         const total = visits.length;
         const countryCounts = new Map();
+        const pageCounts = new Map();
+        const blogCounts = new Map();
         let vnCount = 0;
 
         visits.forEach((visit) => {
@@ -117,9 +145,21 @@ async function loadVisitReport() {
             if ((visit.countryCode || "").toUpperCase() === "VN") {
                 vnCount += 1;
             }
+
+            const normalizedPageName = String(visit.pageName || visit.page || "home");
+            const pageKey = normalizedPageName.replace(/^\//, "") || "home";
+            const pageLabel = pageNameLabels[pageKey] || pageKey.replace(/-/g, " ");
+            pageCounts.set(pageLabel, (pageCounts.get(pageLabel) || 0) + 1);
+
+            if (pageKey.startsWith("blog-post-")) {
+                const blogLabel = pageNameLabels[pageKey] || pageKey;
+                blogCounts.set(blogLabel, (blogCounts.get(blogLabel) || 0) + 1);
+            }
         });
 
         const sortedCountryEntries = [...countryCounts.entries()].sort((a, b) => b[1] - a[1]);
+        const sortedPageEntries = [...pageCounts.entries()].sort((a, b) => b[1] - a[1]);
+        const sortedBlogEntries = [...blogCounts.entries()].sort((a, b) => b[1] - a[1]);
         const otherCount = Math.max(0, total - vnCount);
 
         totalVisitsEl.textContent = String(total);
@@ -128,6 +168,8 @@ async function loadVisitReport() {
         countryCountEl.textContent = String(countryCounts.size);
 
         renderCountryRows(sortedCountryEntries, total);
+        renderPageRows(sortedPageEntries, total);
+        renderBlogRows(sortedBlogEntries, total);
         renderRecentVisits(visits);
 
         statusMessageEl.textContent = "Data updated.";

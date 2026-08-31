@@ -719,6 +719,10 @@ async function navigateTo(pageName) {
         await loadBlogPostIfNeeded(pageName, targetPage);
         targetPage.classList.add('active');
     }
+
+    window.dispatchEvent(new CustomEvent('pageview', {
+        detail: { pageName }
+    }));
     
     // Scroll to top
     window.scrollTo(0, 0);
