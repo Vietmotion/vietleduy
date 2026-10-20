@@ -8,6 +8,8 @@ const blogTagButtons = document.querySelectorAll('.blog-tag');
 const blogCards = document.querySelectorAll('#blog .blog-card');
 const blogNoResults = document.getElementById('blogNoResults');
 const themeToggle = document.getElementById('themeToggle');
+const languageToggle = document.getElementById('languageToggle');
+const originalDocumentTitle = document.title;
 const chapterRack = document.getElementById('chapterRack');
 const chapterStoryPanel = document.getElementById('chapterStoryPanel');
 const chapterStoryKicker = document.getElementById('chapterStoryKicker');
@@ -35,8 +37,13 @@ const artModalImage = document.getElementById('artModalImage');
 const artModalCaption = document.getElementById('artModalCaption');
 
 let currentArtId = 'lola-trip';
+let currentLanguage = localStorage.getItem('vld-language') === 'vi' ? 'vi' : 'en';
+const siteTranslations = window.VLD_TRANSLATIONS || {};
+const originalTextNodes = new WeakMap();
+const originalAttributes = new WeakMap();
 let showcaseSnapTimeout = null;
 let isShowcaseSnapping = false;
+let lastGalleryScrollY = window.scrollY || 0;
 
 artVinylButtons.forEach((button, index) => {
     const centerIndex = (artVinylButtons.length - 1) / 2;
@@ -83,6 +90,101 @@ function isGalleryPageActive() {
     return activePage?.id === 'gallery';
 }
 
+function normalizeTranslationKey(value) {
+    return value.replace(/\s+/g, ' ').trim();
+}
+
+function translateSite(root = document) {
+    const isVietnamese = currentLanguage === 'vi';
+    document.documentElement.lang = currentLanguage;
+    document.body.dataset.language = currentLanguage;
+    document.title = isVietnamese
+        ? (siteTranslations[originalDocumentTitle] || originalDocumentTitle)
+        : originalDocumentTitle;
+
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+    let textNode;
+    while ((textNode = walker.nextNode())) {
+        if (textNode.parentElement?.closest('#languageToggle, script, style, noscript')) {
+            continue;
+        }
+
+        if (!originalTextNodes.has(textNode)) {
+            originalTextNodes.set(textNode, textNode.nodeValue);
+        } else {
+            const savedText = originalTextNodes.get(textNode) || '';
+            const savedTranslation = siteTranslations[normalizeTranslationKey(savedText)];
+            if (textNode.nodeValue !== savedText && textNode.nodeValue !== savedTranslation) {
+                originalTextNodes.set(textNode, textNode.nodeValue);
+            }
+        }
+
+        const originalText = originalTextNodes.get(textNode) || '';
+        const key = normalizeTranslationKey(originalText);
+        if (!key) {
+            continue;
+        }
+
+        const translatedText = isVietnamese ? siteTranslations[key] : null;
+        if (translatedText) {
+            const leadingWhitespace = originalText.match(/^\s*/)?.[0] || '';
+            const trailingWhitespace = originalText.match(/\s*$/)?.[0] || '';
+            textNode.nodeValue = `${leadingWhitespace}${translatedText}${trailingWhitespace}`;
+        } else if (!isVietnamese) {
+            textNode.nodeValue = originalText;
+        }
+    }
+
+    const elements = root.nodeType === Node.ELEMENT_NODE
+        ? [root, ...root.querySelectorAll('*')]
+        : [...root.querySelectorAll('*')];
+    const translatableAttributes = ['aria-label', 'placeholder', 'title', 'alt'];
+
+    elements.forEach(element => {
+        if (element === languageToggle) {
+            return;
+        }
+
+        let savedAttributes = originalAttributes.get(element);
+        if (!savedAttributes) {
+            savedAttributes = new Map();
+            originalAttributes.set(element, savedAttributes);
+        }
+
+        translatableAttributes.forEach(attribute => {
+            if (!element.hasAttribute(attribute)) {
+                return;
+            }
+
+            if (!savedAttributes.has(attribute)) {
+                savedAttributes.set(attribute, element.getAttribute(attribute));
+            } else {
+                const savedValue = savedAttributes.get(attribute);
+                const savedTranslation = siteTranslations[normalizeTranslationKey(savedValue)];
+                const currentValue = element.getAttribute(attribute);
+                if (currentValue !== savedValue && currentValue !== savedTranslation) {
+                    savedAttributes.set(attribute, currentValue);
+                }
+            }
+
+            const originalValue = savedAttributes.get(attribute);
+            const key = normalizeTranslationKey(originalValue);
+            const translatedValue = isVietnamese ? siteTranslations[key] : null;
+            if (translatedValue) {
+                element.setAttribute(attribute, translatedValue);
+            } else if (!isVietnamese) {
+                element.setAttribute(attribute, originalValue);
+            }
+        });
+    });
+
+    if (languageToggle) {
+        languageToggle.textContent = isVietnamese ? 'Vie' : 'Eng';
+        languageToggle.setAttribute('aria-label', isVietnamese ? 'Chuyển sang tiếng Anh' : 'Switch to Vietnamese');
+        languageToggle.title = isVietnamese ? 'Chuyển sang tiếng Anh' : 'Switch to Vietnamese';
+    }
+}
+
 function shouldAutoScrollOnHover(button) {
     if (!artVinylStack || !button) {
         return false;
@@ -102,6 +204,11 @@ function maybeSnapToShowcase() {
         return;
     }
 
+    const currentScrollY = window.scrollY || 0;
+    if (currentScrollY <= 180) {
+        return;
+    }
+
     const stageRect = artVinylStage.getBoundingClientRect();
     const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
     const stickyTopOffset = viewportHeight >= 1000 ? 56 : 28;
@@ -113,14 +220,17 @@ function maybeSnapToShowcase() {
         return;
     }
 
-    isShowcaseSnapping = true;
-
     const targetTop = Math.max(0, window.scrollY + stageRect.top - stickyTopOffset);
+    if (targetTop <= currentScrollY) {
+        return;
+    }
+
+    isShowcaseSnapping = true;
     window.scrollTo({ top: targetTop, behavior: 'smooth' });
 
     window.setTimeout(() => {
         isShowcaseSnapping = false;
-    }, 520);
+    }, 900);
 }
 
 const artPieces = {
@@ -690,6 +800,7 @@ async function loadBlogPostIfNeeded(pageName, targetPage) {
 
         targetPage.innerHTML = await response.text();
         targetPage.dataset.loaded = 'true';
+        translateSite(targetPage);
     } catch (error) {
         targetPage.innerHTML = `
             <div class="blog-post">
@@ -717,6 +828,7 @@ async function navigateTo(pageName) {
     const targetPage = document.getElementById(pageName);
     if (targetPage) {
         await loadBlogPostIfNeeded(pageName, targetPage);
+        translateSite(targetPage);
         targetPage.classList.add('active');
     }
 
@@ -795,7 +907,11 @@ function applyTheme(themeName) {
 
     if (themeToggle) {
         themeToggle.dataset.mode = resolvedTheme;
-        themeToggle.setAttribute('aria-label', resolvedTheme === 'dark' ? 'Switch to bright mode' : 'Switch to dark mode');
+        const themeLabel = resolvedTheme === 'dark' ? 'Switch to bright mode' : 'Switch to dark mode';
+        themeToggle.setAttribute('aria-label', themeLabel);
+        if (currentLanguage === 'vi') {
+            translateSite(themeToggle);
+        }
     }
 }
 
@@ -899,6 +1015,8 @@ function renderChapter(chapterId, options = {}) {
         activeChapterId = String(chapterId);
         syncChapterButtons(activeChapterId);
     }
+
+    translateSite(chapterStoryPanel);
 }
 
 function moveChapter(direction) {
@@ -1086,6 +1204,8 @@ function renderArtPiece(artId, options = {}) {
         }
     }
 
+    translateSite(document.getElementById('gallery'));
+
     const selectedButton = artVinylButtons.find(button => button.dataset.artId === artId);
     if (selectedButton && artVinylStack && shouldAutoScroll) {
         requestAnimationFrame(() => {
@@ -1238,13 +1358,35 @@ window.addEventListener('resize', updateArtStackGutters);
 window.addEventListener('scroll', () => {
     updateMoveUpButtonVisibility();
 
+    const currentScrollY = window.scrollY || 0;
+    const isScrollingUp = currentScrollY < lastGalleryScrollY;
+    lastGalleryScrollY = currentScrollY;
+
+    if (isScrollingUp || currentScrollY <= 180) {
+        if (showcaseSnapTimeout) {
+            window.clearTimeout(showcaseSnapTimeout);
+            showcaseSnapTimeout = null;
+        }
+
+        if (isShowcaseSnapping) {
+            window.scrollTo({ top: currentScrollY, behavior: 'instant' });
+            isShowcaseSnapping = false;
+        }
+
+        return;
+    }
+
     if (showcaseSnapTimeout) {
         window.clearTimeout(showcaseSnapTimeout);
     }
 
     showcaseSnapTimeout = window.setTimeout(() => {
+        showcaseSnapTimeout = null;
+        if ((window.scrollY || 0) < currentScrollY) {
+            return;
+        }
         maybeSnapToShowcase();
-    }, 95);
+    }, 180);
 }, { passive: true });
 
 if (themeToggle) {
@@ -1259,5 +1401,14 @@ if (themeToggle) {
     document.body.dataset.theme = localStorage.getItem('vld-theme') || 'light';
 }
 
+if (languageToggle) {
+    languageToggle.addEventListener('click', () => {
+        currentLanguage = currentLanguage === 'en' ? 'vi' : 'en';
+        localStorage.setItem('vld-language', currentLanguage);
+        translateSite();
+    });
+}
+
 renderChapter(activeChapterId, { persist: true });
+translateSite();
 updateMoveUpButtonVisibility();

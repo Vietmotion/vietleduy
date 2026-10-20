@@ -1,74 +1,214 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Analytics - Viet Le Duy</title>
+    <meta name="theme-color" content="#f4f1ea">
+    <title>Báo cáo truy cập | Viet Le Duy</title>
     <link rel="stylesheet" href="admin.css">
 </head>
 <body>
     <main class="admin-shell">
         <header class="admin-header">
-            <p class="admin-kicker">Private Dashboard</p>
-            <h1>Visitor Report</h1>
-            <p class="admin-subtitle">Track total visits and see where visitors come from, including Vietnam vs other countries.</p>
+            <div>
+                <p class="admin-kicker">Viet Le Duy · Admin</p>
+                <h1>Báo cáo truy cập</h1>
+                <p class="admin-subtitle">Theo dõi lượt xem trang, quốc gia và nội dung được quan tâm.</p>
+            </div>
+            <div class="header-actions">
+                <label class="filter-label" for="periodFilter">Khoảng thời gian</label>
+                <select id="periodFilter" class="period-filter">
+                    <option value="all">Toàn bộ dữ liệu</option>
+                    <option value="30">30 ngày gần nhất</option>
+                    <option value="7">7 ngày gần nhất</option>
+                    <option value="today">Hôm nay (UTC)</option>
+                </select>
+                <button type="button" id="refreshButton" class="refresh-button">Làm mới</button>
+            </div>
         </header>
 
-        <section class="metric-grid" aria-label="Visitor summary">
-            <article class="metric-card">
-                <h2>Total Visits</h2>
-                <p class="metric-value" id="totalVisits">-</p>
+        <p id="statusMessage" class="status-message" role="status" aria-live="polite">Đang tải dữ liệu...</p>
+
+        <section class="metric-grid" aria-label="Tổng quan lượt truy cập">
+            <article class="metric-card metric-card-primary">
+                <p class="metric-label">Lượt xem đã ghi nhận</p>
+                <p class="metric-value" id="totalVisits">—</p>
+                <p class="metric-note">Bản ghi page-view trong khoảng đã chọn</p>
             </article>
             <article class="metric-card">
-                <h2>Vietnam</h2>
-                <p class="metric-value" id="vietnamVisits">-</p>
+                <p class="metric-label">Từ Việt Nam</p>
+                <p class="metric-value" id="vietnamVisits">—</p>
+                <p class="metric-note">Xác định theo mã quốc gia hoặc tên nước</p>
             </article>
             <article class="metric-card">
-                <h2>Other Countries</h2>
-                <p class="metric-value" id="otherVisits">-</p>
+                <p class="metric-label">Từ nước khác</p>
+                <p class="metric-value" id="otherVisits">—</p>
+                <p class="metric-note">Không bao gồm vị trí chưa xác định</p>
             </article>
             <article class="metric-card">
-                <h2>Tracked Countries</h2>
-                <p class="metric-value" id="countryCount">-</p>
+                <p class="metric-label">Quốc gia đã xác định</p>
+                <p class="metric-value" id="countryCount">—</p>
+                <p class="metric-note">Không tính bản ghi thiếu thông tin quốc gia</p>
+            </article>
+            <article class="metric-card">
+                <p class="metric-label">Chưa xác định quốc gia</p>
+                <p class="metric-value" id="unknownVisits">—</p>
+                <p class="metric-note">Vẫn được tính trong tổng lượt xem</p>
+            </article>
+        </section>
+
+        <section class="overview-grid" aria-label="Bản đồ và thống kê quốc gia">
+            <article class="panel map-panel">
+                <div class="panel-heading">
+                    <div>
+                        <p class="section-kicker">Phân bố địa lý</p>
+                        <h2>Bản đồ lượt truy cập</h2>
+                    </div>
+                    <span class="map-legend"><span class="legend-dot"></span> Lượt xem</span>
+                </div>
+                <div class="map-frame">
+                    <svg id="visitMap" viewBox="0 0 1000 500" role="group" aria-labelledby="mapTitle mapDescription">
+                        <title id="mapTitle">Bản đồ nguồn truy cập theo quốc gia</title>
+                        <desc id="mapDescription">Các điểm đánh dấu nằm gần tâm địa lý của quốc gia. Bảng bên cạnh hiển thị số liệu chính xác.</desc>
+                        <g class="map-graticule" aria-hidden="true">
+                            <path d="M0 125H1000M0 250H1000M0 375H1000M250 0V500M500 0V500M750 0V500"></path>
+                        </g>
+                        <g class="map-land" aria-hidden="true">
+                            <path d="M75 100 112 65 165 52 192 67 228 64 254 93 244 119 267 137 254 158 230 166 221 195 200 210 193 243 172 254 158 235 145 211 122 198 114 172 92 157 83 133 66 124Z"></path>
+                            <path d="m247 265 25 13 17 36-8 36-18 32-13 44-20 33-12-24 4-37-13-30 9-38 12-30Z"></path>
+                            <path d="m430 99 26-17 37 7 15 21-19 20-29-3-20 12-21-15Z"></path>
+                            <path d="m451 153 39-16 44 9 22 30-10 42-18 26-6 47-24 41-26-15-16-42-18-35 8-43-17-28Z"></path>
+                            <path d="m520 97 39-29 59 1 32-18 78 15 40 27 61 10 61 37-12 25-44-8-24 19-37-7-29 23-29-15-30 22-21-18-35 15-27-24-31 5-22-24-35 2-20-25-31 3-17-24Z"></path>
+                            <path d="m780 300 38-17 48 10 30 27-16 34-34 14-36-12-28-24Z"></path>
+                            <path d="m875 413 33-12 35 17-6 27-33 9-28-16Z"></path>
+                            <path d="m89 47 39-17 44 7 23 22-17 16-45-4-31 8-21-14Z"></path>
+                        </g>
+                        <g id="mapMarkers" class="map-markers"></g>
+                    </svg>
+                </div>
+                <p id="mapCoverage" class="map-note">Vị trí chấm là tâm địa lý gần đúng; xem bảng để biết số lượt chính xác.</p>
+            </article>
+
+            <article class="panel">
+                <div class="panel-heading">
+                    <div>
+                        <p class="section-kicker">Bảng chi tiết</p>
+                        <h2>Lượt xem theo quốc gia</h2>
+                    </div>
+                    <span id="countryTableTotal" class="table-total">—</span>
+                </div>
+                <div class="table-wrap country-table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th scope="col">Quốc gia</th>
+                                <th scope="col">Lượt xem</th>
+                                <th scope="col">Tỷ trọng</th>
+                            </tr>
+                        </thead>
+                        <tbody id="countryTableBody"></tbody>
+                    </table>
+                </div>
+            </article>
+        </section>
+
+        <section class="detail-grid" aria-label="Thống kê nội dung">
+            <article class="panel">
+                <div class="panel-heading">
+                    <div>
+                        <p class="section-kicker">Điều hướng</p>
+                        <h2>Trang được xem nhiều</h2>
+                    </div>
+                </div>
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Trang</th>
+                                <th scope="col">Lượt xem</th>
+                                <th scope="col">Tỷ trọng</th>
+                            </tr>
+                        </thead>
+                        <tbody id="pageTableBody"></tbody>
+                    </table>
+                </div>
+            </article>
+            <article class="panel">
+                <div class="panel-heading">
+                    <div>
+                        <p class="section-kicker">Nội dung</p>
+                        <h2>Lượt xem bài viết</h2>
+                    </div>
+                </div>
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Bài viết</th>
+                                <th scope="col">Lượt xem</th>
+                                <th scope="col">Tỷ trọng</th>
+                            </tr>
+                        </thead>
+                        <tbody id="blogTableBody"></tbody>
+                    </table>
+                </div>
             </article>
         </section>
 
         <section class="panel">
-            <div class="panel-heading">
-                <h2>Country Breakdown</h2>
-                <button type="button" id="refreshButton" class="refresh-button">Refresh</button>
+            <div class="panel-heading recent-heading">
+                <div>
+                    <p class="section-kicker">Hoạt động mới</p>
+                    <h2>Lượt xem gần đây</h2>
+                </div>
+                <span class="table-total">Tối đa 30 bản ghi mới nhất</span>
             </div>
-            <p id="statusMessage" class="status-message">Loading visit data...</p>
-            <div id="countryRows" class="country-rows"></div>
-        </section>
-
-        <section class="panel">
-            <h2>Top Pages</h2>
-            <div id="pageRows" class="country-rows"></div>
-        </section>
-
-        <section class="panel">
-            <h2>Blog Reads</h2>
-            <div id="blogRows" class="country-rows"></div>
-        </section>
-
-        <section class="panel">
-            <h2>Recent Visits</h2>
             <div class="table-wrap">
-                <table>
+                <table class="recent-table">
                     <thead>
                         <tr>
-                            <th>Time (UTC)</th>
-                            <th>Country</th>
-                            <th>Region</th>
-                            <th>City</th>
-                            <th>Language</th>
+                            <th scope="col">Thời gian (UTC)</th>
+                            <th scope="col">Quốc gia</th>
+                            <th scope="col">Tỉnh / vùng</th>
+                            <th scope="col">Thành phố</th>
+                            <th scope="col">Trang</th>
+                            <th scope="col">Ngôn ngữ</th>
                         </tr>
                     </thead>
                     <tbody id="recentVisitsBody"></tbody>
                 </table>
             </div>
         </section>
+
+        <section class="panel critical-panel">
+            <p class="section-kicker">Ưu tiên cập nhật</p>
+            <h2>Các điểm critical cho Admin</h2>
+            <div class="recommendation-grid">
+                <article class="recommendation recommendation-critical">
+                    <span class="priority-tag">P0 · Bảo mật</span>
+                    <h3>Khóa quyền truy cập Admin</h3>
+                    <p>Trang hiện chưa có bước đăng nhập. Bật Firebase Authentication và giới hạn Firestore Security Rules theo tài khoản quản trị; ẩn URL không thay thế được phân quyền.</p>
+                </article>
+                <article class="recommendation">
+                    <span class="priority-tag">P1 · Độ tin cậy</span>
+                    <h3>Chuẩn hóa cách tính lượt</h3>
+                    <p>Mỗi số liệu ở đây là một bản ghi page-view, không phải người dùng duy nhất. Nên xác định rõ session, bot, lượt tải lại và cơ chế chống ghi trùng.</p>
+                </article>
+                <article class="recommendation">
+                    <span class="priority-tag">P1 · Quy mô</span>
+                    <h3>Tổng hợp dữ liệu phía máy chủ</h3>
+                    <p>Đọc toàn bộ bản ghi giúp bảng chính xác nhưng tốn lượt đọc khi dữ liệu tăng. Dùng Cloud Function / lịch tổng hợp theo ngày và quốc gia để mở rộng hiệu quả.</p>
+                </article>
+                <article class="recommendation">
+                    <span class="priority-tag">P1 · Quyền riêng tư</span>
+                    <h3>Rà soát dữ liệu vị trí</h3>
+                    <p>Đặt thời hạn lưu trữ, thông báo quyền riêng tư và quy trình xóa dữ liệu; vị trí IP qua dịch vụ bên thứ ba có thể sai hoặc không xác định.</p>
+                </article>
+            </div>
+        </section>
+        <p class="data-footnote">Số liệu quốc gia phụ thuộc dữ liệu định vị IP và có thể không chính xác tuyệt đối với VPN, proxy hoặc mạng di động. “Chưa xác định” vẫn được tính trong tổng lượt xem.</p>
     </main>
 
     <script type="module" src="admin.js"></script>
