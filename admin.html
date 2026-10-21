@@ -69,24 +69,15 @@
                 <div class="map-frame">
                     <svg id="visitMap" viewBox="0 0 1000 500" role="group" aria-labelledby="mapTitle mapDescription">
                         <title id="mapTitle">Bản đồ nguồn truy cập theo quốc gia</title>
-                        <desc id="mapDescription">Các điểm đánh dấu nằm gần tâm địa lý của quốc gia. Bảng bên cạnh hiển thị số liệu chính xác.</desc>
+                        <desc id="mapDescription">Bản đồ có ranh giới quốc gia. Các điểm đánh dấu nằm gần tâm địa lý; lượt chưa xác định vị trí không được gán lên bản đồ.</desc>
                         <g class="map-graticule" aria-hidden="true">
                             <path d="M0 125H1000M0 250H1000M0 375H1000M250 0V500M500 0V500M750 0V500"></path>
                         </g>
-                        <g class="map-land" aria-hidden="true">
-                            <path d="M75 100 112 65 165 52 192 67 228 64 254 93 244 119 267 137 254 158 230 166 221 195 200 210 193 243 172 254 158 235 145 211 122 198 114 172 92 157 83 133 66 124Z"></path>
-                            <path d="m247 265 25 13 17 36-8 36-18 32-13 44-20 33-12-24 4-37-13-30 9-38 12-30Z"></path>
-                            <path d="m430 99 26-17 37 7 15 21-19 20-29-3-20 12-21-15Z"></path>
-                            <path d="m451 153 39-16 44 9 22 30-10 42-18 26-6 47-24 41-26-15-16-42-18-35 8-43-17-28Z"></path>
-                            <path d="m520 97 39-29 59 1 32-18 78 15 40 27 61 10 61 37-12 25-44-8-24 19-37-7-29 23-29-15-30 22-21-18-35 15-27-24-31 5-22-24-35 2-20-25-31 3-17-24Z"></path>
-                            <path d="m780 300 38-17 48 10 30 27-16 34-34 14-36-12-28-24Z"></path>
-                            <path d="m875 413 33-12 35 17-6 27-33 9-28-16Z"></path>
-                            <path d="m89 47 39-17 44 7 23 22-17 16-45-4-31 8-21-14Z"></path>
-                        </g>
+                        <g id="mapLand" class="map-land" aria-hidden="true"></g>
                         <g id="mapMarkers" class="map-markers"></g>
                     </svg>
                 </div>
-                <p id="mapCoverage" class="map-note">Vị trí chấm là tâm địa lý gần đúng; xem bảng để biết số lượt chính xác.</p>
+                <p id="mapCoverage" class="map-note">Vị trí chấm gần đúng; lượt thiếu dữ liệu quốc gia không thể hiện trên bản đồ.</p>
             </article>
 
             <article class="panel">
@@ -208,7 +199,7 @@
                 </article>
             </div>
         </section>
-        <p class="data-footnote">Số liệu quốc gia phụ thuộc dữ liệu định vị IP và có thể không chính xác tuyệt đối với VPN, proxy hoặc mạng di động. “Chưa xác định” vẫn được tính trong tổng lượt xem.</p>
+        <p class="data-footnote">Tên nước được hiển thị bằng tiếng Việt. Số liệu quốc gia phụ thuộc dữ liệu định vị IP và có thể không chính xác tuyệt đối với VPN, proxy hoặc mạng di động. “Chưa xác định” nghĩa là bản ghi không có thông tin quốc gia; ngôn ngữ trang web không đủ để suy ra vị trí, và dữ liệu lịch sử thiếu quốc gia không thể khôi phục chính xác. Các đường biên bản đồ khái quát theo dữ liệu Natural Earth; lượt xem chính xác nằm trong bảng.</p>
     </main>
 
     <script type="module" src="admin.js"></script>

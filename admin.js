@@ -10,6 +10,7 @@ import {
     startAfter,
 } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore.js";
 import { firebaseConfig, visitsCollectionName } from "./firebase-config.js";
+import worldMapFeatures from "./world-map-data.js";
 
 const totalVisitsEl = document.getElementById("totalVisits");
 const vietnamVisitsEl = document.getElementById("vietnamVisits");
@@ -23,6 +24,7 @@ const recentVisitsBodyEl = document.getElementById("recentVisitsBody");
 const statusMessageEl = document.getElementById("statusMessage");
 const countryTableTotalEl = document.getElementById("countryTableTotal");
 const mapCoverageEl = document.getElementById("mapCoverage");
+const mapLandEl = document.getElementById("mapLand");
 const mapMarkersEl = document.getElementById("mapMarkers");
 const periodFilterEl = document.getElementById("periodFilter");
 const refreshButton = document.getElementById("refreshButton");
@@ -41,23 +43,10 @@ const pageNameLabels = {
     "blog-post-4": "Cách xây dựng thương hiệu bền vững",
 };
 
-const countryCentroids = {
-    AE: [54.4, 24.3], AR: [-64.2, -34.6], AT: [14.1, 47.6], AU: [134.5, -25.7],
-    BD: [90.3, 23.7], BE: [4.7, 50.6], BR: [-51.9, -10.8], CA: [-106.3, 56.1],
-    CH: [8.2, 46.8], CL: [-71.0, -35.7], CN: [103.8, 35.9], CO: [-73.1, 3.9],
-    CZ: [15.5, 49.8], DE: [10.4, 51.1], DK: [9.5, 56.0], EG: [30.8, 26.8],
-    ES: [-3.7, 40.4], FI: [26.0, 64.0], FR: [2.2, 46.2], GB: [-3.4, 55.4],
-    GR: [22.0, 39.1], HK: [114.2, 22.3], ID: [117.2, -2.2], IE: [-8.0, 53.4],
-    IN: [78.9, 22.8], IT: [12.6, 42.8], JP: [138.0, 36.2], KR: [127.8, 36.4],
-    LK: [80.7, 7.9], MM: [95.9, 21.9], MX: [-102.5, 23.6], MY: [102.0, 4.2],
-    NG: [8.7, 9.1], NL: [5.3, 52.1], NO: [8.5, 61.0], NZ: [172.0, -41.3],
-    PE: [-75.0, -9.2], PH: [122.9, 11.8], PK: [69.3, 30.4], PL: [19.1, 52.1],
-    PT: [-8.0, 39.6], RU: [90.0, 60.0], SA: [45.1, 23.9], SE: [15.0, 62.0],
-    SG: [103.8, 1.35], TH: [101.0, 15.9], TR: [35.2, 39.0], TW: [120.9, 23.7],
-    UA: [31.2, 48.4], US: [-98.6, 39.8], VN: [108.3, 14.1], ZA: [25.1, -29.6],
-};
-
 const countryDisplayNames = typeof Intl.DisplayNames === "function"
+    ? new Intl.DisplayNames(["vi"], { type: "region" })
+    : null;
+const englishCountryDisplayNames = typeof Intl.DisplayNames === "function"
     ? new Intl.DisplayNames(["en"], { type: "region" })
     : null;
 const numberFormatter = new Intl.NumberFormat("vi-VN");
@@ -65,6 +54,43 @@ const percentFormatter = new Intl.NumberFormat("vi-VN", {
     minimumFractionDigits: 1,
     maximumFractionDigits: 1,
 });
+
+const countryFeaturesByCode = new Map();
+const countryFeaturesByIso3 = new Map();
+const countryCodesByName = new Map();
+
+function normalizeCountryName(name) {
+    return String(name)
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .toLocaleLowerCase("vi")
+        .replace(/\s+/g, " ")
+        .trim();
+}
+
+worldMapFeatures.forEach((feature) => {
+    if (!/^[A-Z]{2}$/.test(feature.code)) {
+        return;
+    }
+
+    countryFeaturesByCode.set(feature.code, feature);
+    if (/^[A-Z]{3}$/.test(feature.iso3)) {
+        countryFeaturesByIso3.set(feature.iso3, feature);
+    }
+
+    const names = [
+        ...feature.names,
+        countryDisplayNames?.of(feature.code),
+        englishCountryDisplayNames?.of(feature.code),
+    ];
+    names.forEach((name) => {
+        if (name) {
+            countryCodesByName.set(normalizeCountryName(name), feature);
+        }
+    });
+});
+
+countryCodesByName.set("viet nam", countryFeaturesByCode.get("VN"));
 
 let db;
 let allVisits = [];
@@ -108,36 +134,38 @@ function displayCountryName(countryCode, countryName) {
         }
     }
 
-    return countryName || "Chưa xác định";
+    return countryName || countryFeaturesByCode.get(countryCode)?.names[0] || "Không xác định vị trí";
 }
 
 function getCountryIdentity(visit) {
     const rawCode = String(visit.countryCode || "").trim().toUpperCase();
     const rawName = String(visit.country || "").trim();
-    const validCode = /^[A-Z]{2}$/.test(rawCode) && rawCode !== "ZZ" ? rawCode : "";
-    const normalizedName = rawName.toLocaleLowerCase("vi");
-    const isVietnam = validCode === "VN" || ["vietnam", "viet nam", "việt nam"].includes(normalizedName);
+    const namedFeature = countryCodesByName.get(normalizeCountryName(rawName));
+    const codedFeature = countryFeaturesByCode.get(rawCode) || countryFeaturesByIso3.get(rawCode);
+    const validCode = rawCode !== "ZZ" && /^[A-Z]{2}$/.test(rawCode)
+        ? rawCode
+        : codedFeature?.code || namedFeature?.code || "";
+    const feature = countryFeaturesByCode.get(validCode);
+    const normalizedName = normalizeCountryName(rawName);
+    const isVietnam = validCode === "VN" || normalizeCountryName(rawName) === "viet nam";
 
     if (validCode) {
         return {
             key: validCode,
             code: validCode,
-            name: displayCountryName(validCode, rawName),
+            name: displayCountryName(validCode, feature?.names[0] || namedFeature?.names[0] || rawName),
             isVietnam,
         };
     }
 
     if (!rawName || ["unknown", "n/a", "null", "undefined"].includes(normalizedName)) {
-        return { key: "unknown", code: "", name: "Chưa xác định", isVietnam: false };
+        return { key: "unknown", code: "", name: "Không xác định vị trí", isVietnam: false };
     }
 
-    const canonicalName = ["vietnam", "viet nam", "việt nam"].includes(normalizedName)
-        ? "Vietnam"
-        : rawName;
     return {
         key: `name:${normalizedName}`,
         code: "",
-        name: canonicalName,
+        name: namedFeature?.names[0] || rawName,
         isVietnam,
     };
 }
@@ -220,14 +248,23 @@ function projectCoordinates(longitude, latitude) {
     };
 }
 
+function renderMapLand() {
+    const pathElements = worldMapFeatures.map((feature) => {
+        const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+        path.setAttribute("d", feature.path);
+        return path;
+    });
+    mapLandEl.replaceChildren(...pathElements);
+}
+
 function renderMap(countryEntries) {
     mapMarkersEl.replaceChildren();
     const knownCountries = countryEntries.filter((entry) => entry.key !== "unknown");
-    const mappedEntries = knownCountries.filter((entry) => entry.code && countryCentroids[entry.code]);
+    const mappedEntries = knownCountries.filter((entry) => entry.code && countryFeaturesByCode.has(entry.code));
     const maxCount = Math.max(1, ...mappedEntries.map((entry) => entry.count));
 
     mappedEntries.forEach((entry) => {
-        const [longitude, latitude] = countryCentroids[entry.code];
+        const [longitude, latitude] = countryFeaturesByCode.get(entry.code).center;
         const { x, y } = projectCoordinates(longitude, latitude);
         const marker = document.createElementNS("http://www.w3.org/2000/svg", "circle");
         marker.setAttribute("class", "map-marker");
@@ -245,9 +282,13 @@ function renderMap(countryEntries) {
     });
 
     const unmappedCount = knownCountries.length - mappedEntries.length;
+    const unknownEntry = countryEntries.find((entry) => entry.key === "unknown");
+    const unknownNote = unknownEntry
+        ? ` ${numberFormatter.format(unknownEntry.count)} lượt thiếu dữ liệu quốc gia nên không thể gán lên bản đồ.`
+        : "";
     mapCoverageEl.textContent = mappedEntries.length
-        ? `Đã đặt ${mappedEntries.length}/${knownCountries.length} quốc gia có dữ liệu lên bản đồ. Tâm địa lý là gần đúng; số liệu chính xác nằm trong bảng.${unmappedCount ? ` ${unmappedCount} quốc gia chưa có tọa độ trên bản đồ.` : ""}`
-        : "Chưa có quốc gia đủ thông tin để hiển thị trên bản đồ; bảng bên cạnh vẫn liệt kê toàn bộ số liệu.";
+        ? `Đã đặt ${mappedEntries.length}/${knownCountries.length} quốc gia có dữ liệu lên bản đồ. Tâm địa lý gần đúng; số liệu chính xác nằm trong bảng.${unmappedCount ? ` ${unmappedCount} quốc gia chưa có ranh giới bản đồ.` : ""}${unknownNote}`
+        : `Chưa có quốc gia đủ thông tin để hiển thị trên bản đồ; bảng bên cạnh vẫn liệt kê toàn bộ số liệu.${unknownNote}`;
 }
 
 function renderRecentVisits(visits) {
@@ -407,6 +448,8 @@ async function loadVisitReport() {
 }
 
 function boot() {
+    renderMapLand();
+
     if (!hasFirebaseConfig()) {
         setStatus("Vui lòng cấu hình firebase-config.js trước khi tải báo cáo.", "error");
         refreshButton.disabled = true;
